@@ -24,3 +24,6 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
+void AWeapon::OnPrimaryAttack() {
+	UE_LOG(LogTemp, Warning, TEXT("Weapon attacking."));
+}

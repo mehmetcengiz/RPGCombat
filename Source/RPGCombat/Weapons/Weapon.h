@@ -6,6 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "Weapon.generated.h"
 
+UENUM(BlueprintType)
+enum class EWeaponType : uint8 {
+	DEFAULT				UMETA(DisplayName = "Default"),
+	SWORDANDSHIELD		UMETA(DisplayName = "Sword and Shield"),
+	BOW					UMETA(DisplayName = "Bow"),
+	MAGE				UMETA(DisplayName = "Mage")
+};
+
+
 UCLASS()
 class RPGCOMBAT_API AWeapon : public AActor
 {
@@ -18,9 +27,14 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void OnPrimaryAttack();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	EWeaponType WeaponType = EWeaponType::DEFAULT;
 
 };

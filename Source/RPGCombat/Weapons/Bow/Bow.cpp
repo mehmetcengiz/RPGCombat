@@ -2,3 +2,21 @@
 
 #include "Bow.h"
 
+
+ABow::ABow() {
+	PrimaryActorTick.bCanEverTick = true;
+}
+
+void ABow::BeginPlay() {
+	Super::BeginPlay();
+}
+
+
+void ABow::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+}
+
+void ABow::OnPrimaryAttack() {
+	Super::OnPrimaryAttack();
+	UE_LOG(LogTemp, Warning, TEXT("Weapon>>Bow>>OnPrimaryAttack"));
+}
