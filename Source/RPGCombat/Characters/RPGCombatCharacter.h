@@ -48,11 +48,11 @@ public:
 
 	/** Base turn rate, in deg/sec.*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
-		float BaseTurnRate;
+	float BaseTurnRate;
 
 	/** Base look up/down rate, in deg/sec. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
-		float BaseLookUpRate;
+	float BaseLookUpRate;
 
 	/*Movement Functions*/
 	void TurnAtRate(float Rate);
