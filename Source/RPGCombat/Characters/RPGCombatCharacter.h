@@ -4,8 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
+#include "CharacterAnimInterface.h"
+
 #include "RPGCombatCharacter.generated.h"
 
+class AWeapon;
 
 UENUM(BlueprintType)
 enum class EAttackingType : uint8 {
@@ -62,10 +66,12 @@ public:
 
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-		class AWeapon* Weapon;
+	AWeapon* Weapon;
+
+	void SetWeapon(AWeapon* Weapon);
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-		EAttackingType AttackingType = EAttackingType::PRIMARY;
+	EAttackingType AttackingType = EAttackingType::PRIMARY;
 
 	//Attacking.
 	void PrimaryAttackPressed();
@@ -74,9 +80,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Animation")
 	bool bIsAttacking;
 
-	UPROPERTY(BlueprintReadWrite, Category = "Animation")
-	float MovingRight;
-	UPROPERTY(BlueprintReadWrite, Category = "Animation")
-	float MovingForward;
+	ICharacterAnimInterface* CharacterAnimInterface;
+
 
 };

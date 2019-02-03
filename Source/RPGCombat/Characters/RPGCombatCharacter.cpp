@@ -5,10 +5,13 @@
 /*Engine inputs.*/
 #include "Components/InputComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h" 
 #include "GameFramework/Controller.h"
+
+
 #include "Engine/World.h"
 
 
@@ -121,6 +124,11 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 			AddMovementInput(Direction, Value);
 		}
 	}
+}
+
+void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
+	Weapon = NewWeapon;
+	CharacterAnimInterface->Set_WeaponType(NewWeapon->WeaponType);
 }
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {

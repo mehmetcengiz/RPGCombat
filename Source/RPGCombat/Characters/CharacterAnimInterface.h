@@ -2,8 +2,13 @@
 
 #pragma once
 
+/*Engine includes.*/
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+
+/*Local includes.*/
+#include "Weapons/Weapon.h"
+
 #include "CharacterAnimInterface.generated.h"
 
 // This class does not need to be modified.
@@ -27,4 +32,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
 	void Set_Direction(float Direction);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
+	void Set_WeaponType(EWeaponType WeaponType);
 };
