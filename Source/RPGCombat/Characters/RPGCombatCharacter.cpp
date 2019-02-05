@@ -133,11 +133,10 @@ void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
 	Weapon = NewWeapon;
 
 	//Calling animation Interface.
-	UAnimInstance* PlayerAnimInstance = GetMesh()->GetAnimInstance();	
-	if(PlayerAnimInstance) {
-		if (PlayerAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
-			ICharacterAnimInterface::Execute_SetWeaponType(PlayerAnimInstance, NewWeapon->WeaponType);
-			UE_LOG(LogTemp, Warning, TEXT("Interface called!!"));
+	UAnimInstance* CharacterAnimInstance = GetMesh()->GetAnimInstance();	
+	if(CharacterAnimInstance) {
+		if (CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
+			ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
 		}
 	}
 	
