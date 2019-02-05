@@ -31,8 +31,8 @@ public:
 	/**Varibles*/
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
-	void Set_Direction(float Direction);
+	void SetDirection(float Direction);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
-	void Set_WeaponType(EWeaponType WeaponType);
+	void SetWeaponType(EWeaponType WeaponType);
 };

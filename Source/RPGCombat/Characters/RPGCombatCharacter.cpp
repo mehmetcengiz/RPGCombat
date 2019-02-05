@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h" 
 #include "GameFramework/Controller.h"
+#include "CharacterAnimInterface.h"
 
 
 #include "Engine/World.h"
@@ -127,14 +128,28 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
+
+	UAnimInstance* PlayerAnimInstance = GetMesh()->GetAnimInstance();
+	
+	if(PlayerAnimInstance) {
+		if (PlayerAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
+			ICharacterAnimInterface::Execute_SetWeaponType(PlayerAnimInstance,EWeaponType::MAGE);
+			UE_LOG(LogTemp, Warning, TEXT("Interface called!!"));
+		}
+	}
+
+	
+
+
 	Weapon = NewWeapon;
-	CharacterAnimInterface->Set_WeaponType(NewWeapon->WeaponType);
+	//CharacterAnimInterface->Set_WeaponType(NewWeapon->WeaponType);
 }
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
 	bIsAttacking = true;
 	AttackingType = EAttackingType::PRIMARY;
+	SetWeapon(nullptr);
 }
 
 void ARPGCombatCharacter::PrimaryAttackReleased() {
