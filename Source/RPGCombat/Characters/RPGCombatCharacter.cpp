@@ -128,28 +128,26 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
+	if (!Weapon) { return; }
 
-	UAnimInstance* PlayerAnimInstance = GetMesh()->GetAnimInstance();
-	
+	Weapon = NewWeapon;
+
+	//Calling animation Interface.
+	UAnimInstance* PlayerAnimInstance = GetMesh()->GetAnimInstance();	
 	if(PlayerAnimInstance) {
 		if (PlayerAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
-			ICharacterAnimInterface::Execute_SetWeaponType(PlayerAnimInstance,EWeaponType::MAGE);
+			ICharacterAnimInterface::Execute_SetWeaponType(PlayerAnimInstance, NewWeapon->WeaponType);
 			UE_LOG(LogTemp, Warning, TEXT("Interface called!!"));
 		}
 	}
-
 	
-
-
-	Weapon = NewWeapon;
-	//CharacterAnimInterface->Set_WeaponType(NewWeapon->WeaponType);
+	
 }
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
 	bIsAttacking = true;
 	AttackingType = EAttackingType::PRIMARY;
-	SetWeapon(nullptr);
 }
 
 void ARPGCombatCharacter::PrimaryAttackReleased() {
