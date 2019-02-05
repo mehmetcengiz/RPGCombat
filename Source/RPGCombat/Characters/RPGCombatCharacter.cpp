@@ -128,7 +128,7 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
-	if (!Weapon) { return; }
+	if (!NewWeapon) { return; }
 
 	Weapon = NewWeapon;
 
