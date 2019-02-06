@@ -11,14 +11,6 @@
 
 class AWeapon;
 
-UENUM(BlueprintType)
-enum class EAttackingType : uint8 {
-	PRIMARY				UMETA(DisplayName = "Primary Attack"),
-	SECONDARY			UMETA(DisplayName = "Secondary Attack"),
-	SKILL_A				UMETA(DisplayName = "Skill A"),
-	SKILL_B				UMETA(DisplayName = "Skill B")
-};
-
 UCLASS()
 class RPGCOMBAT_API ARPGCombatCharacter : public ACharacter
 {
@@ -76,10 +68,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	AWeapon* Weapon;
-
-
-	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	EAttackingType AttackingType = EAttackingType::PRIMARY;
 
 	//Attacking.
 	void PrimaryAttackPressed();

@@ -101,31 +101,27 @@ void ARPGCombatCharacter::LookUpAtRate(float Rate) {
 }
 
 void ARPGCombatCharacter::MoveForward(float Value) {
-	if ((Controller != NULL) && (Value != 0.0f)) {
-		if (!bIsCharacterFocused) {
-			// find out which way is forward
-			const FRotator Rotation = Controller->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
+	if ((Controller != NULL) && (Value != 0.0f)){
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-			// get forward vector
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-			AddMovementInput(Direction, Value);
-		}
+		// get forward vector
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(Direction, Value);
 	}
 }
 
 void ARPGCombatCharacter::MoveRight(float Value) {
-	if ((Controller != NULL) && (Value != 0.0f)) {
-		if (!bIsCharacterFocused) {
-			// find out which way is right
-			const FRotator Rotation = Controller->GetControlRotation();
-			const FRotator YawRotation(0, Rotation.Yaw, 0);
+	if ((Controller != NULL) && (Value != 0.0f)){
+		// find out which way is right
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
 
-			// get right vector 
-			const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-			// add movement in that direction
-			AddMovementInput(Direction, Value);
-		}
+		// get right vector 
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		// add movement in that direction
+		AddMovementInput(Direction, Value);
 	}
 }
 
@@ -148,12 +144,10 @@ void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
 void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
 	bIsAttacking = true;
-	AttackingType = EAttackingType::PRIMARY;
 }
 
 void ARPGCombatCharacter::PrimaryAttackReleased() {
 	bIsAttacking = false;
-	AttackingType = EAttackingType::PRIMARY;
 }
 
 void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -162,7 +156,6 @@ void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	AWeapon* NewWeapon = Cast<AWeapon>(OtherActor);
 	if(NewWeapon){
 		this->SwitchWeapon(NewWeapon);
-		UE_LOG(LogTemp, Warning, TEXT("Character overlapped with %s"), *OtherActor->GetName());
 	}
 
 
