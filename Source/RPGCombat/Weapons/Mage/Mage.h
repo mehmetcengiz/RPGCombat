@@ -13,5 +13,8 @@ UCLASS()
 class RPGCOMBAT_API AMage : public AWeapon
 {
 	GENERATED_BODY()
-	
+
+
+public:
+	AMage();
 };

@@ -2,3 +2,6 @@
 
 #include "SwordAndShield.h"
 
+ASwordAndShield::ASwordAndShield(){
+	WeaponType = EWeaponType::SWORDANDSHIELD;
+}

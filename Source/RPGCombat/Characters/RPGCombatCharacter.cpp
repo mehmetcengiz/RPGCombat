@@ -50,13 +50,15 @@ ARPGCombatCharacter::ARPGCombatCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
 }
 
 // Called when the game starts or when spawned
 void ARPGCombatCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ARPGCombatCharacter::BeginOverlap);
 }
 
 // Called every frame
@@ -142,6 +144,7 @@ void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
 	Weapon = NewWeapon;
 }
 
+
 void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
 	bIsAttacking = true;
@@ -151,4 +154,16 @@ void ARPGCombatCharacter::PrimaryAttackPressed() {
 void ARPGCombatCharacter::PrimaryAttackReleased() {
 	bIsAttacking = false;
 	AttackingType = EAttackingType::PRIMARY;
+}
+
+void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult){
+	
+	AWeapon* NewWeapon = Cast<AWeapon>(OtherActor);
+	if(NewWeapon){
+		this->SwitchWeapon(NewWeapon);
+		UE_LOG(LogTemp, Warning, TEXT("Character overlapped with %s"), *OtherActor->GetName());
+	}
+
+
 }

@@ -5,10 +5,12 @@
 
 ABow::ABow() {
 	PrimaryActorTick.bCanEverTick = true;
+	
 }
 
 void ABow::BeginPlay() {
 	Super::BeginPlay();
+	WeaponType = EWeaponType::BOW;
 }
 
 

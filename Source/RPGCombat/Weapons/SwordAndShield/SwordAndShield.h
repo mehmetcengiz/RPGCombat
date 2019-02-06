@@ -13,5 +13,7 @@ UCLASS()
 class RPGCOMBAT_API ASwordAndShield : public AWeapon
 {
 	GENERATED_BODY()
-	
+
+public:
+	ASwordAndShield();
 };

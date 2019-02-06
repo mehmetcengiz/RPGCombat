@@ -2,3 +2,6 @@
 
 #include "Mage.h"
 
+AMage::AMage(){
+	WeaponType = EWeaponType::MAGE;
+}
