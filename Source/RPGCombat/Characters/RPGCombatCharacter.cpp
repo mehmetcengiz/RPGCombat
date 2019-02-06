@@ -127,20 +127,19 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 	}
 }
 
-void ARPGCombatCharacter::SetWeapon(AWeapon* NewWeapon) {
-	if (!NewWeapon) { return; }
-
-	Weapon = NewWeapon;
+void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
+	//if (!NewWeapon) { return; }
 
 	//Calling animation Interface.
 	UAnimInstance* CharacterAnimInstance = GetMesh()->GetAnimInstance();	
 	if(CharacterAnimInstance) {
 		if (CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
-			ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
+			EWeaponType NewWeaponType = NewWeapon == nullptr ? EWeaponType::DEFAULT : NewWeapon->WeaponType;
+			ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeaponType); //Calling blueprint interface.
 		}
 	}
 	
-	
+	Weapon = NewWeapon;
 }
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {

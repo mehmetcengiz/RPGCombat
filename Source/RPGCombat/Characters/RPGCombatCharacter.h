@@ -39,6 +39,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable,Category="Weapon")
+	void SwitchWeapon(AWeapon* Weapon);
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -68,7 +71,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	AWeapon* Weapon;
 
-	void SetWeapon(AWeapon* Weapon);
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	EAttackingType AttackingType = EAttackingType::PRIMARY;
