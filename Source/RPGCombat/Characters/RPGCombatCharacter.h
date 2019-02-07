@@ -76,6 +76,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Animation")
 	bool bIsAttacking;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Character")
+	AActor* ActorToFocus;
+
+	void FocusToActor();
+
 	ICharacterAnimInterface* CharacterAnimInterface;
 
 

@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h" 
 #include "GameFramework/Controller.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "CharacterAnimInterface.h"
 
 
@@ -65,7 +66,10 @@ void ARPGCombatCharacter::BeginPlay()
 void ARPGCombatCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
+	if(ActorToFocus){
+		FocusToActor();
+	}
 }
 
 // Called to bind functionality to input
@@ -148,6 +152,11 @@ void ARPGCombatCharacter::PrimaryAttackPressed() {
 
 void ARPGCombatCharacter::PrimaryAttackReleased() {
 	bIsAttacking = false;
+}
+
+void ARPGCombatCharacter::FocusToActor(){
+	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), ActorToFocus->GetActorLocation());
+	SetActorRotation(NewRotation);
 }
 
 void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
