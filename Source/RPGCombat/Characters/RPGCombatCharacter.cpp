@@ -26,9 +26,6 @@ ARPGCombatCharacter::ARPGCombatCharacter()
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 
-	
-
-
 	// set our turn rates for input
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
@@ -81,6 +78,7 @@ void ARPGCombatCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARPGCombatCharacter::PrimaryAttackPressed);
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Released, this, &ARPGCombatCharacter::PrimaryAttackReleased);
+	//PlayerInputComponent->BindAction("Focus", IE_Pressed, this, &ARPGCombatCharacter::GetFocusedActor);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ARPGCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ARPGCombatCharacter::MoveRight);

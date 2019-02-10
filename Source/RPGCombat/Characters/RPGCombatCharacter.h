@@ -81,7 +81,11 @@ public:
 
 	void FocusToActor();
 
+protected:
+	UFUNCTION(BlueprintCallable,Category ="Character Movements")
+	void SetFocusActor(AActor* NewActorToFocus) { ActorToFocus = NewActorToFocus; }
+	
+public:
 	ICharacterAnimInterface* CharacterAnimInterface;
-
 
 };
