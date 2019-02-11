@@ -92,20 +92,38 @@ void ARPGCombatCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Turn", this, &ARPGCombatCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("TurnRate", this, &ARPGCombatCharacter::TurnAtRate);
-	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
+	PlayerInputComponent->BindAxis("LookUp", this, &ARPGCombatCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &ARPGCombatCharacter::LookUpAtRate);
 }
 
 void ARPGCombatCharacter::TurnAtRate(float Rate) {
 	// calculate delta for this frame from the rate information
-	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	if(!bIsFocused) {
+		AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	}
+	
+}
+
+void ARPGCombatCharacter::AddControllerYawInput(float val) {
+	if(!bIsFocused) {
+		Super::AddControllerYawInput(val);
+	}
+	
 }
 
 void ARPGCombatCharacter::LookUpAtRate(float Rate) {
 	// calculate delta for this frame from the rate information
-	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	if(!bIsFocused) {
+		AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+	}
+}
+
+void ARPGCombatCharacter::AddControllerPitchInput(float val) {
+	if (!bIsFocused) {
+		Super::AddControllerPitchInput(val);
+	}
 }
 
 void ARPGCombatCharacter::MoveForward(float Value) {
@@ -184,6 +202,7 @@ void ARPGCombatCharacter::PrimaryAttackReleased() {
 void ARPGCombatCharacter::TurnFocusedActor(){
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), ActorToFocus->GetActorLocation());
 	SetActorRotation(NewRotation);
+
 }
 
 void ARPGCombatCharacter::SelectFocusedActor() {

@@ -61,7 +61,9 @@ public:
 
 	/*Movement Functions*/
 	void TurnAtRate(float Rate);
+	void AddControllerYawInput(float val) override;
 	void LookUpAtRate(float Rate);
+	void AddControllerPitchInput(float val) override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
