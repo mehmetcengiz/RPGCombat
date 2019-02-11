@@ -73,13 +73,17 @@ public:
 	void PrimaryAttackPressed();
 	void PrimaryAttackReleased();
 
-	UPROPERTY(BlueprintReadWrite, Category = "Animation")
-	bool bIsAttacking;
-
 	UPROPERTY(BlueprintReadWrite, Category = "Character")
 	AActor* ActorToFocus;
 
-	void FocusToActor();
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Debug")
+	AActor* FocusActorToDebug;
+
+	void TurnFocusedActor();
+	void SelectFocusedActor();
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Character")
+	bool bIsFocused;
 
 protected:
 	UFUNCTION(BlueprintCallable,Category ="Character Movements")

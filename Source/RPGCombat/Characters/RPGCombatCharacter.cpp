@@ -71,7 +71,7 @@ void ARPGCombatCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	if(ActorToFocus){
-		FocusToActor();
+		TurnFocusedActor();
 	}
 }
 
@@ -84,7 +84,7 @@ void ARPGCombatCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARPGCombatCharacter::PrimaryAttackPressed);
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Released, this, &ARPGCombatCharacter::PrimaryAttackReleased);
-	//PlayerInputComponent->BindAction("Focus", IE_Pressed, this, &ARPGCombatCharacter::GetFocusedActor);
+	PlayerInputComponent->BindAction("Focus", IE_Pressed, this, &ARPGCombatCharacter::SelectFocusedActor);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ARPGCombatCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ARPGCombatCharacter::MoveRight);
@@ -176,16 +176,29 @@ void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
-	bIsAttacking = true;
 }
 
 void ARPGCombatCharacter::PrimaryAttackReleased() {
-	bIsAttacking = false;
 }
 
-void ARPGCombatCharacter::FocusToActor(){
+void ARPGCombatCharacter::TurnFocusedActor(){
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), ActorToFocus->GetActorLocation());
 	SetActorRotation(NewRotation);
+}
+
+void ARPGCombatCharacter::SelectFocusedActor() {
+	
+	if(!bIsFocused) {
+		SetFocusActor(FocusActorToDebug);
+		bIsFocused = true;
+	}else {
+		SetFocusActor(nullptr);
+		bIsFocused = false;
+	}
+
+	if (bIsImplementsCharacterAnimInterface) {
+		ICharacterAnimInterface::Execute_SetIsFocused(CharacterAnimInstance, bIsFocused);
+	}
 }
 
 void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
