@@ -108,6 +108,7 @@ void ARPGCombatCharacter::MoveForward(float Value) {
 		FVector Direction;
 		if (ActorToFocus) {
 			Direction = GetActorForwardVector();
+			
 		}
 		else {
 			// find out which way is forward
@@ -121,6 +122,14 @@ void ARPGCombatCharacter::MoveForward(float Value) {
 
 		AddMovementInput(Direction, Value);
 	}
+	//Calling animation Interface.
+	UAnimInstance* CharacterAnimInstance = GetMesh()->GetAnimInstance();
+	if (CharacterAnimInstance) {
+		if (CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
+			ICharacterAnimInterface::Execute_SetForward(CharacterAnimInstance, Value); //Calling blueprint interface.
+		}
+	}
+
 }
 
 void ARPGCombatCharacter::MoveRight(float Value) {
@@ -140,6 +149,15 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+
+	//Calling animation Interface.
+	UAnimInstance* CharacterAnimInstance = GetMesh()->GetAnimInstance();
+	if (CharacterAnimInstance) {
+		if (CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
+			ICharacterAnimInterface::Execute_SetRight(CharacterAnimInstance, Value); //Calling blueprint interface.
+		}
+	}
+
 }
 
 void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
