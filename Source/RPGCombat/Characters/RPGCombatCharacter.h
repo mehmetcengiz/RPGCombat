@@ -88,7 +88,7 @@ protected:
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;
 	UAnimInstance* CharacterAnimInstance;
-	bool bCharacterAnimInterface;
+	bool bIsImplementsCharacterAnimInterface;
 
 
 

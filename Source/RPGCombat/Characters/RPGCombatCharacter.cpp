@@ -59,7 +59,7 @@ void ARPGCombatCharacter::BeginPlay()
 	//Get Animation class and check interface.
 	CharacterAnimInstance = GetMesh()->GetAnimInstance();
 	if(CharacterAnimInstance){
-		bCharacterAnimInterface = CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass());
+		bIsImplementsCharacterAnimInterface = CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass());
 	}
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ARPGCombatCharacter::BeginOverlap);
@@ -129,7 +129,7 @@ void ARPGCombatCharacter::MoveForward(float Value) {
 		AddMovementInput(Direction, Value);
 	}
 	//Calling animation Interface.
-	if (bCharacterAnimInterface) {
+	if (bIsImplementsCharacterAnimInterface) {
 			ICharacterAnimInterface::Execute_SetForward(CharacterAnimInstance, Value); //Calling blueprint interface.
 	}
 
@@ -155,7 +155,7 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 
 	//Calling animation Interface.
 
-	if (bCharacterAnimInterface) {
+	if (bIsImplementsCharacterAnimInterface) {
 			ICharacterAnimInterface::Execute_SetRight(CharacterAnimInstance, Value); //Calling blueprint interface.
 	}
 
@@ -165,7 +165,7 @@ void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
 	//if (!NewWeapon) { return; }
 
 	//Calling animation Interface.
-	if(bCharacterAnimInterface) {
+	if(bIsImplementsCharacterAnimInterface) {
 			EWeaponType NewWeaponType = NewWeapon == nullptr ? EWeaponType::DEFAULT : NewWeapon->WeaponType;
 			ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeaponType); //Calling blueprint interface.
 	}
