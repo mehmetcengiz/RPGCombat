@@ -34,7 +34,7 @@ public:
 	void SetForward(float Forward);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
-	void SetRight(float Forward);
+	void SetRight(float Right);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
 	void SetWeaponType(EWeaponType WeaponType);
