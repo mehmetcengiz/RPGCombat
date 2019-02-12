@@ -203,6 +203,8 @@ void ARPGCombatCharacter::TurnFocusedActor(){
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), ActorToFocus->GetActorLocation());
 	SetActorRotation(NewRotation);
 
+	FRotator NewCameraRotation = UKismetMathLibrary::FindLookAtRotation(FollowCamera->GetComponentLocation(), ActorToFocus->GetActorLocation());
+	FollowCamera->SetWorldRotation(NewCameraRotation);
 }
 
 void ARPGCombatCharacter::SelectFocusedActor() {
@@ -210,9 +212,11 @@ void ARPGCombatCharacter::SelectFocusedActor() {
 	if(!bIsFocused) {
 		SetFocusActor(FocusActorToDebug);
 		bIsFocused = true;
+		CameraBoom->bUsePawnControlRotation = false;
 	}else {
 		SetFocusActor(nullptr);
 		bIsFocused = false;
+		CameraBoom->bUsePawnControlRotation = true;
 	}
 
 	if (bIsImplementsCharacterAnimInterface) {
