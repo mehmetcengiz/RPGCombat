@@ -40,5 +40,8 @@ public:
 	void SetWeaponType(EWeaponType WeaponType);
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
-	void SetIsFocused(bool IsFocused);
+	void SetIsFocused(bool IsFocused);	
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "AnimationInterface")
+	void SetIsEquippedWeapon(bool IsEquippedWeapon);
 };

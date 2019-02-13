@@ -71,6 +71,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	AWeapon* Weapon;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	bool bIsEquippedWeapon;
+
 	//Attacking.
 	void PrimaryAttackPressed();
 	void PrimaryAttackReleased();

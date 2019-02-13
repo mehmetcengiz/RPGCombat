@@ -8,7 +8,6 @@
 
 UENUM(BlueprintType)
 enum class EWeaponType : uint8 {
-	DEFAULT				UMETA(DisplayName = "Default"),
 	SWORDANDSHIELD		UMETA(DisplayName = "Sword and Shield"),
 	BOW					UMETA(DisplayName = "Bow"),
 	MAGE				UMETA(DisplayName = "Mage")
@@ -35,6 +34,6 @@ public:
 
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	EWeaponType WeaponType = EWeaponType::DEFAULT;
+	EWeaponType WeaponType;
 
 };
