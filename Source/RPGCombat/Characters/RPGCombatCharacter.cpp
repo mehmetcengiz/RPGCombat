@@ -180,7 +180,7 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
-	if (NewWeapon){
+	if (!NewWeapon){
 		bIsEquippedWeapon = false;
 		return;
 	}
