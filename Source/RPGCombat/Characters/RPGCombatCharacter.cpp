@@ -185,12 +185,13 @@ void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
 		return;
 	}
 
+	bIsEquippedWeapon = true;
 	//Calling animation Interface.
 	if(bIsImplementsCharacterAnimInterface) {
 		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
+		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon); //Calling blueprint interface.
 	}
 
-	bIsEquippedWeapon = true;
 	Weapon = NewWeapon;
 }
 
