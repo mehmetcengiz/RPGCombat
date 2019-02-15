@@ -76,7 +76,6 @@ public:
 
 	//Attacking.
 	void PrimaryAttackPressed();
-	void PrimaryAttackReleased();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Character")
 	AActor* ActorToFocus;

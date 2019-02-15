@@ -83,7 +83,6 @@ void ARPGCombatCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 	check(PlayerInputComponent);
 
 	PlayerInputComponent->BindAction("PrimaryAttack", IE_Pressed, this, &ARPGCombatCharacter::PrimaryAttackPressed);
-	PlayerInputComponent->BindAction("PrimaryAttack", IE_Released, this, &ARPGCombatCharacter::PrimaryAttackReleased);
 	PlayerInputComponent->BindAction("Focus", IE_Pressed, this, &ARPGCombatCharacter::SelectFocusedActor);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ARPGCombatCharacter::MoveForward);
@@ -200,19 +199,15 @@ void ARPGCombatCharacter::PrimaryAttackPressed() {
 	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
 }
 
-void ARPGCombatCharacter::PrimaryAttackReleased() {
-}
-
 void ARPGCombatCharacter::TurnFocusedActor(){
 	FRotator NewRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), ActorToFocus->GetActorLocation());
 	SetActorRotation(NewRotation);
 
 	FRotator NewCameraRotation = UKismetMathLibrary::FindLookAtRotation(FollowCamera->GetComponentLocation(), ActorToFocus->GetActorLocation());
-	FollowCamera->SetWorldRotation(NewCameraRotation);
+	FollowCamera->SetWorldRotation(FMath::Lerp(FollowCamera->GetComponentRotation(),NewCameraRotation,0.1f));
 }
 
 void ARPGCombatCharacter::SelectFocusedActor() {
-	
 	if(!bIsFocused) {
 		SetFocusActor(FocusActorToDebug);
 		bIsFocused = true;
