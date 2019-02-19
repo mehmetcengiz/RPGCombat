@@ -226,10 +226,8 @@ void ARPGCombatCharacter::SelectFocusedActor() {
 void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult){
 	
-	AWeapon* NewWeapon = Cast<AWeapon>(OtherActor);
-	if(NewWeapon){
-		this->SwitchWeapon(NewWeapon);
-	}
-
-
+	//AWeapon* NewWeapon = Cast<AWeapon>(OtherActor);
+	//if(NewWeapon){
+	//	this->SwitchWeapon(NewWeapon);
+	//}
 }
