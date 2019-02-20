@@ -18,7 +18,9 @@ UCLASS()
 class RPGCOMBAT_API AWeapon : public AActor
 {
 	GENERATED_BODY()
-	
+
+
+
 public:	
 	// Sets default values for this actor's properties
 	AWeapon();
@@ -27,6 +29,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	virtual void OnPrimaryAttack();
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Weapon Components")
+	class UStaticMeshComponent* WeaponMesh;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon Components")
+	class USphereComponent* WeaponCollision;
+
 
 public:	
 	// Called every frame
