@@ -17,6 +17,9 @@ AWeapon::AWeapon()
 	WeaponCollision->SetupAttachment(WeaponMesh);
 
 	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 
 
 }
