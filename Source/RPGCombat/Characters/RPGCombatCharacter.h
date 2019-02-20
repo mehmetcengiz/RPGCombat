@@ -32,7 +32,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UFUNCTION(BlueprintCallable,Category="Weapon")
-	void SwitchWeapon(AWeapon* Weapon);
+	void EquipWeapon(AWeapon* Weapon);
 
 	UFUNCTION()
 	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 

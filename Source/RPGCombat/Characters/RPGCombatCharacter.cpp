@@ -178,7 +178,7 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 
 }
 
-void ARPGCombatCharacter::SwitchWeapon(AWeapon* NewWeapon) {
+void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	if (!NewWeapon){
 		bIsEquippedWeapon = false;
 		return;
@@ -228,6 +228,6 @@ void ARPGCombatCharacter::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	
 	//AWeapon* NewWeapon = Cast<AWeapon>(OtherActor);
 	//if(NewWeapon){
-	//	this->SwitchWeapon(NewWeapon);
+	//	this->EquipWeapon(NewWeapon);
 	//}
 }
