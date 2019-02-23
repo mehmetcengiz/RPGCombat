@@ -31,8 +31,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UFUNCTION(BlueprintCallable,Category="Weapon")
-	void EquipWeapon(AWeapon* Weapon);
 
 	UFUNCTION()
 	void BeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, 
@@ -49,6 +47,9 @@ public:
 
 	/*Controls and Mechanics*/
 
+	/*
+	 *Movement actions
+	 */
 	bool bIsCharacterFocused = false;
 
 	/** Base turn rate, in deg/sec.*/
@@ -59,7 +60,6 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	float BaseLookUpRate;
 
-	/*Movement Functions*/
 	void TurnAtRate(float Rate);
 	void AddControllerYawInput(float val) override;
 	void LookUpAtRate(float Rate);
@@ -67,15 +67,8 @@ public:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 
-
-	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	AWeapon* Weapon;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	bool bIsEquippedWeapon;
-
-	//Attacking.
-	void PrimaryAttackPressed();
+	void TurnFocusedActor();
+	void SelectFocusedActor();
 
 	UPROPERTY(BlueprintReadWrite, Category = "Character")
 	AActor* ActorToFocus;
@@ -83,21 +76,33 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Debug")
 	AActor* FocusActorToDebug;
 
-	void TurnFocusedActor();
-	void SelectFocusedActor();
-	
-	UPROPERTY(BlueprintReadWrite, Category = "Character")
-	bool bIsFocused;
-
 protected:
 	UFUNCTION(BlueprintCallable,Category ="Character Movements")
 	void SetFocusActor(AActor* NewActorToFocus) { ActorToFocus = NewActorToFocus; }
+
+	/*
+	 *Item actions
+	 */
+public:
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	AWeapon* Weapon;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
+	bool bIsEquippedWeapon;
+
+	UFUNCTION(BlueprintCallable,Category="Weapon")
+	void EquipWeapon(AWeapon* Weapon);
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Character")
+	bool bIsFocused;
 	
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;
 	UAnimInstance* CharacterAnimInstance;
 	bool bIsImplementsCharacterAnimInterface;
 
-
+public:
+	//Attacking.
+	void PrimaryAttackPressed();
 
 };
