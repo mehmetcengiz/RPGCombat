@@ -90,8 +90,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	bool bIsEquippedWeapon;
 
-	UFUNCTION(BlueprintCallable,Category="Weapon")
-	void EquipWeapon(AWeapon* Weapon);
+	UFUNCTION(BlueprintCallable,Category = "Weapon")
+	void EquipWeapon(AWeapon* NewWeapon);
 
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;
