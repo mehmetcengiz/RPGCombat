@@ -69,10 +69,11 @@ public:
 
 	void TurnFocusedActor();
 	void SelectFocusedActor();
-
+	
+	UPROPERTY(BlueprintReadWrite, Category = "Character")
+	bool bIsFocused;
 	UPROPERTY(BlueprintReadWrite, Category = "Character")
 	AActor* ActorToFocus;
-
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Debug")
 	AActor* FocusActorToDebug;
 
@@ -86,16 +87,12 @@ protected:
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	AWeapon* Weapon;
-
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	bool bIsEquippedWeapon;
 
 	UFUNCTION(BlueprintCallable,Category="Weapon")
 	void EquipWeapon(AWeapon* Weapon);
-	
-	UPROPERTY(BlueprintReadWrite, Category = "Character")
-	bool bIsFocused;
-	
+
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;
 	UAnimInstance* CharacterAnimInstance;
