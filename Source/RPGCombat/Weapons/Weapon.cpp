@@ -38,6 +38,10 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
+void AWeapon::OnAttachedToCharacter() {
+	WeaponMesh->SetSimulatePhysics(false);
+}
+
 void AWeapon::OnPrimaryAttack() {
 	UE_LOG(LogTemp, Warning, TEXT("Weapon attacking."));
 }

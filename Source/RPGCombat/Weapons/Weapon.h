@@ -36,6 +36,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon Components")
 	class USphereComponent* WeaponCollision;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
+	FName WeaponAttachingSocketName;
 
 public:	
 	// Called every frame
@@ -44,5 +46,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	EWeaponType WeaponType;
+
+	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
+
+	virtual void OnAttachedToCharacter();
 
 };
