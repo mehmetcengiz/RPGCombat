@@ -20,6 +20,7 @@ AWeapon::AWeapon()
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+	
 
 
 }
@@ -40,7 +41,16 @@ void AWeapon::Tick(float DeltaTime)
 
 void AWeapon::OnAttachedToCharacter() {
 	WeaponMesh->SetSimulatePhysics(false);
+	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 }
+
+void AWeapon::OnDetachFromCharacter() {
+	WeaponMesh->SetSimulatePhysics(true);
+	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
+	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
+}
+
 
 void AWeapon::OnPrimaryAttack() {
 	UE_LOG(LogTemp, Warning, TEXT("Weapon attacking."));

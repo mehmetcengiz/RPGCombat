@@ -50,5 +50,6 @@ public:
 	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 
 	virtual void OnAttachedToCharacter();
+	virtual void OnDetachFromCharacter();
 
 };
