@@ -193,7 +193,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 
 	Weapon = NewWeapon;
 
-	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative,false);
+	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative,true);
 	Weapon->AttachToComponent(GetMesh(), newAttachmentTransformRules, Weapon->GetWeaponAttachingSocketName());
 	Weapon->OnAttachedToCharacter();
 }
