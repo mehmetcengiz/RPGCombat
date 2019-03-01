@@ -11,6 +11,8 @@
 #include "GameFramework/CharacterMovementComponent.h" 
 #include "GameFramework/Controller.h"
 #include "Kismet/KismetMathLibrary.h"
+
+#include "CharacterComponents/CharacterAttackingComponent.h"
 #include "CharacterAnimInterface.h"
 
 
@@ -49,6 +51,7 @@ ARPGCombatCharacter::ARPGCombatCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
+	CharacterAttackingComponent = CreateDefaultSubobject<UCharacterAttackingComponent>(TEXT("Character Attacking"));
 }
 
 // Called when the game starts or when spawned
@@ -200,7 +203,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {
-	UE_LOG(LogTemp, Warning, TEXT("RPGCombatCharacter -> PrimaryAttack"));
+	CharacterAttackingComponent->PrimaryAttack();
 }
 
 void ARPGCombatCharacter::TurnFocusedActor(){

@@ -10,6 +10,7 @@
 #include "RPGCombatCharacter.generated.h"
 
 class AWeapon;
+class UCharacterAttackingComponent;
 
 UCLASS()
 class RPGCOMBAT_API ARPGCombatCharacter : public ACharacter
@@ -87,6 +88,9 @@ protected:
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	AWeapon* Weapon;
+	UPROPERTY(BlueprintReadWrite, Category = "Attacking Component")
+	UCharacterAttackingComponent* CharacterAttackingComponent;
+
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	bool bIsEquippedWeapon;
 
