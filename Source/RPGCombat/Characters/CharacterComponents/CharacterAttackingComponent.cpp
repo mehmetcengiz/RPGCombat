@@ -35,3 +35,7 @@ void UCharacterAttackingComponent::PrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterAttackingComponent>>Primary Attack"));
 }
 
+void UCharacterAttackingComponent::OnAttachedToCharacter() {
+	UE_LOG(LogTemp, Warning, TEXT("UCharacterAttackingComponent::OnAttachedToCharacter()"));
+}
+

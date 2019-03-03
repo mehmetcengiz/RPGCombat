@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Characters/CharacterComponents/AttackingComponents/BowAttackingComponent.h"
 #include "Weapon.generated.h"
 
 UENUM(BlueprintType)
@@ -37,7 +38,11 @@ protected:
 	class USphereComponent* WeaponCollision;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
-	FName WeaponAttachingSocketName;
+	FName WeaponAttachingSocketName;	
+	
+
+
+
 
 public:	
 	// Called every frame
@@ -46,6 +51,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	EWeaponType WeaponType;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon Components")
+	TSubclassOf<class UCharacterAttackingComponent> AttackingComponent;
 
 	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 
