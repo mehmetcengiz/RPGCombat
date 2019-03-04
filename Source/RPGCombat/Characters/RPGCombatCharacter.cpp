@@ -186,6 +186,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 		bIsEquippedWeapon = false;
 		return;
 	}
+
 	Weapon = NewWeapon;
 
 	bIsEquippedWeapon = true;
@@ -206,11 +207,6 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 	
 
-
-
-
-
-
 	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative,true);
 	Weapon->AttachToComponent(GetMesh(), newAttachmentTransformRules, Weapon->GetWeaponAttachingSocketName());
 	Weapon->OnAttachedToCharacter();
@@ -218,6 +214,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {	
+	if (!CharacterAttackingComponent) { return; }
 	CharacterAttackingComponent->PrimaryAttack();
 }
 
