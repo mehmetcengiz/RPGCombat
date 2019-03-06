@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterAttackingComponent.h"
+#include "Weapons/Weapon.h"
 
 // Sets default values for this component's properties
 UCharacterAttackingComponent::UCharacterAttackingComponent()
@@ -35,7 +36,7 @@ void UCharacterAttackingComponent::PrimaryAttack(){
 	UE_LOG(LogTemp, Warning, TEXT("CharacterAttackingComponent>>Primary Attack"));
 }
 
-void UCharacterAttackingComponent::OnAttachedToCharacter() {
+void UCharacterAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	UE_LOG(LogTemp, Warning, TEXT("UCharacterAttackingComponent::OnAttachedToCharacter()"));
 }
 

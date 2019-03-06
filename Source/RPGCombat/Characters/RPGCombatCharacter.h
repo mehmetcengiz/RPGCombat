@@ -96,7 +96,7 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Weapon")
 	void EquipWeapon(AWeapon* NewWeapon);
-
+	
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;
 	UAnimInstance* CharacterAnimInstance;

@@ -26,5 +26,5 @@ public:
 
 	virtual void PrimaryAttack();
 
-	virtual void OnAttachedToCharacter();
+	virtual void OnAttachedToCharacter(class AWeapon* NewWeapon);
 };

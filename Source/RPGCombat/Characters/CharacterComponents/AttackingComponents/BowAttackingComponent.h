@@ -18,5 +18,5 @@ class RPGCOMBAT_API UBowAttackingComponent : public UCharacterAttackingComponent
 protected:
 
 	virtual void PrimaryAttack() override;
-	virtual void OnAttachedToCharacter() override;
+	virtual void OnAttachedToCharacter(class AWeapon* NewWeapon) override;
 };

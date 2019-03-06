@@ -203,7 +203,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->AttackingComponent.Get(), TEXT("Attacking Component"));
 	
 	if(CharacterAttackingComponent) {
-		CharacterAttackingComponent->OnAttachedToCharacter();
+		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
 	
 
