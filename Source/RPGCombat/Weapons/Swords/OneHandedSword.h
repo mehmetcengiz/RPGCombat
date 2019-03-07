@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Weapons/Weapon.h"
-#include "SwordAndShield.generated.h"
+#include "OneHandedSword.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPGCOMBAT_API ASwordAndShield : public AWeapon
+class RPGCOMBAT_API AOneHandedSword : public AWeapon
 {
 	GENERATED_BODY()
 
 public:
-	ASwordAndShield();
+	AOneHandedSword();
 };

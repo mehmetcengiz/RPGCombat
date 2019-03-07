@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "SwordAndShield.h"
+#include "OneHandedSword.h"
 
-ASwordAndShield::ASwordAndShield(){
+AOneHandedSword::AOneHandedSword(){
 	WeaponType = EWeaponType::SWORDANDSHIELD;
 }
