@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "RPGCombatCharacter.h"
@@ -186,9 +187,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 		bIsEquippedWeapon = false;
 		return;
 	}
-
-	Weapon = NewWeapon;
-
+	
 	bIsEquippedWeapon = true;
 	//Calling animation Interface.
 	if(bIsImplementsCharacterAnimInterface) {
@@ -205,11 +204,6 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	if(CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
-	
-
-	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative,true);
-	Weapon->AttachToComponent(GetMesh(), newAttachmentTransformRules, Weapon->GetWeaponAttachingSocketName());
-	Weapon->OnAttachedToCharacter();
 }
 
 

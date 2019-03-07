@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharacterAttackingComponent.h"
+#include "GameFramework/Character.h"
 #include "Weapons/Weapon.h"
 
 // Sets default values for this component's properties
@@ -38,5 +39,13 @@ void UCharacterAttackingComponent::PrimaryAttack(){
 
 void UCharacterAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	UE_LOG(LogTemp, Warning, TEXT("UCharacterAttackingComponent::OnAttachedToCharacter()"));
+
+	Weapon = NewWeapon;
+
+	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
+	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
+	Weapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, Weapon->GetWeaponAttachingSocketName());
+	Weapon->OnAttachedToCharacter();
+
 }
 

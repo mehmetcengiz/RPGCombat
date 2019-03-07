@@ -86,8 +86,6 @@ protected:
 	 *Item actions
 	 */
 public:
-	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	AWeapon* Weapon;
 	UPROPERTY(BlueprintReadWrite, Category = "Attacking Component")
 	UCharacterAttackingComponent* CharacterAttackingComponent;
 
