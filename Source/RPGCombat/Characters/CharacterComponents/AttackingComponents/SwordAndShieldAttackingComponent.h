@@ -4,19 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Characters/CharacterComponents/CharacterAttackingComponent.h"
-#include "BowAttackingComponent.generated.h"
+#include "SwordAndShieldAttackingComponent.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RPGCOMBAT_API UBowAttackingComponent : public UCharacterAttackingComponent
+class RPGCOMBAT_API USwordAndShieldAttackingComponent : public UCharacterAttackingComponent
 {
 	GENERATED_BODY()
 
-
 protected:
-
 	virtual void PrimaryAttack() override;
 	virtual void OnAttachedToCharacter(AWeapon* NewWeapon) override;
 };

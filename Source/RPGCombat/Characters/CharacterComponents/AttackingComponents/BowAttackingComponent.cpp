@@ -7,7 +7,7 @@ void UBowAttackingComponent::PrimaryAttack() {
 	UE_LOG(LogTemp, Warning, TEXT("UBowAttackingComponent::PrimaryAttack()"));
 }
 
-void UBowAttackingComponent::OnAttachedToCharacter(class AWeapon* NewWeapon) {
+void UBowAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	Super::OnAttachedToCharacter(NewWeapon);
 	UE_LOG(LogTemp, Warning, TEXT("UBowAttackingComponent::OnAttachedToCharacter()"));
 }
