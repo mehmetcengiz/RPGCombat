@@ -94,6 +94,8 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Weapon")
 	void EquipWeapon(AWeapon* NewWeapon);
+
+	void SwitchAttackingComponentClass(UClass* AttackingComponentStaticClass);
 	
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;

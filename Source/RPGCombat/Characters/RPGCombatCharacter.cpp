@@ -197,10 +197,8 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-
-	//Constructing attacking component.
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->AttackingComponent.Get(), TEXT("Attacking Component"));	
-	if(CharacterAttackingComponent) {
+	SwitchAttackingComponentClass(NewWeapon->AttackingComponent.Get());
+	if (CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
 
@@ -209,6 +207,12 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
 		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon); //Calling blueprint interface.
 	}
+}
+
+void ARPGCombatCharacter::SwitchAttackingComponentClass(UClass* AttackingComponentStaticClass) {
+	//Constructing attacking component.
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, AttackingComponentStaticClass, TEXT("Attacking Component"));
+
 }
 
 
