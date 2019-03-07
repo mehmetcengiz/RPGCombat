@@ -30,4 +30,5 @@ public:
 	virtual void PrimaryAttack();
 
 	virtual void OnAttachedToCharacter(class AWeapon* NewWeapon);
+	virtual void OnDetachedFromCharacter();
 };

@@ -49,3 +49,10 @@ void UCharacterAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 
 }
 
+void UCharacterAttackingComponent::OnDetachedFromCharacter() {
+	if (Weapon) {
+		Weapon->Destroy();
+		Weapon = nullptr;
+	}
+}
+

@@ -183,26 +183,30 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
+	if (CharacterAttackingComponent) {
+		CharacterAttackingComponent->OnDetachedFromCharacter();
+		CharacterAttackingComponent->DestroyComponent(false);
+	}
+
 	if (!NewWeapon){
 		bIsEquippedWeapon = false;
+		if (bIsImplementsCharacterAnimInterface) {
+			ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, false); //Calling blueprint interface.
+		}
 		return;
 	}
-	
+
 	bIsEquippedWeapon = true;
+	
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->AttackingComponent.Get(), TEXT("Attacking Component"));	
+	if(CharacterAttackingComponent) {
+		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
+	}
+
 	//Calling animation Interface.
 	if(bIsImplementsCharacterAnimInterface) {
 		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
 		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon); //Calling blueprint interface.
-	}
-
-	if(CharacterAttackingComponent) {
-		CharacterAttackingComponent->DestroyComponent(false);
-	}
-
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->AttackingComponent.Get(), TEXT("Attacking Component"));
-	
-	if(CharacterAttackingComponent) {
-		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
 }
 
