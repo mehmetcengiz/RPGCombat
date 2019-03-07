@@ -1,4 +1,3 @@
-
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "RPGCombatCharacter.h"
@@ -16,7 +15,6 @@
 #include "CharacterComponents/CharacterAttackingComponent.h"
 #include "CharacterComponents/AttackingComponents/BowAttackingComponent.h"
 #include "CharacterAnimInterface.h"
-
 
 #include "Engine/World.h"
 
@@ -183,11 +181,13 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
+	//Destroy Weapon Attacking component from previous weapon.
 	if (CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnDetachedFromCharacter();
 		CharacterAttackingComponent->DestroyComponent(false);
 	}
 
+	//Unequip any weapon when NewWeapon null.
 	if (!NewWeapon){
 		bIsEquippedWeapon = false;
 		if (bIsImplementsCharacterAnimInterface) {
@@ -197,7 +197,8 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-	
+
+	//Constructing attacking component.
 	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->AttackingComponent.Get(), TEXT("Attacking Component"));	
 	if(CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
