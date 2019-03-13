@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Characters/CharacterComponents/AttackingComponents/BowAttackingComponent.h"
 #include "Weapon.generated.h"
 
 UENUM(BlueprintType)
@@ -39,10 +38,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
 	FName WeaponAttachingSocketName;	
-	
-
-
-
 
 public:	
 	// Called every frame
@@ -57,7 +52,10 @@ public:
 
 	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 
+	
+
 	virtual void OnAttachedToCharacter();
 	virtual void OnDetachFromCharacter();
+	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(class ARPGCombatCharacter* ParentCharacter);
 
 };

@@ -16,4 +16,6 @@ class RPGCOMBAT_API AOneHandedSword : public AWeapon
 
 public:
 	AOneHandedSword();
+
+	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) override;
 };

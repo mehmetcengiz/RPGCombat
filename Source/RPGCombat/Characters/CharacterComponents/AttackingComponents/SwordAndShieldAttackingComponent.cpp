@@ -6,5 +6,5 @@ void USwordAndShieldAttackingComponent::PrimaryAttack() {
 	Super::PrimaryAttack();
 }
 void USwordAndShieldAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
-	Super::OnAttachedToCharacter(Weapon);
+	Super::OnAttachedToCharacter(NewWeapon);
 }

@@ -44,6 +44,7 @@ void AWeapon::OnAttachedToCharacter() {
 	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 }
 
+
 void AWeapon::OnDetachFromCharacter() {
 	WeaponMesh->SetSimulatePhysics(true);
 	WeaponMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -51,6 +52,9 @@ void AWeapon::OnDetachFromCharacter() {
 	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 }
 
+TSubclassOf<class UCharacterAttackingComponent> AWeapon::GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) {
+	return AttackingComponent;
+}
 
 void AWeapon::OnPrimaryAttack() {
 	UE_LOG(LogTemp, Warning, TEXT("Weapon attacking."));

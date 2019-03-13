@@ -197,7 +197,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-	SwitchAttackingComponentClass(NewWeapon->AttackingComponent.Get());
+	SwitchAttackingComponentClass(NewWeapon->GetAttackingComponent(this).Get());
 	if (CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
