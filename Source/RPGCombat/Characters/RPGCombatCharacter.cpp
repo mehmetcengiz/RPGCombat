@@ -202,6 +202,8 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
 
+	//if(NewWeapon->Prefe)
+
 	//Calling animation Interface.
 	if(bIsImplementsCharacterAnimInterface) {
 		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.

@@ -94,6 +94,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Weapon")
 	void EquipWeapon(AWeapon* NewWeapon);
+	
+	AWeapon* CurrentWeapon_L = nullptr;
+	AWeapon* CurrentWeapon_R = nullptr;
 
 	void SwitchAttackingComponentClass(UClass* AttackingComponentStaticClass);
 	

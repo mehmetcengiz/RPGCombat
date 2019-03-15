@@ -14,6 +14,7 @@ enum class EWeaponType : uint8 {
 };
 
 
+
 UCLASS()
 class RPGCOMBAT_API AWeapon : public AActor
 {
@@ -52,6 +53,11 @@ public:
 
 	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon Components")
+	bool bIsPreferredLeftHand = false;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Components")
+	bool bIsPreferredRightHand = false;
 	
 
 	virtual void OnAttachedToCharacter();

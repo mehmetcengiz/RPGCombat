@@ -11,6 +11,8 @@ AOneHandedSword::AOneHandedSword(){
 TSubclassOf<UCharacterAttackingComponent> AOneHandedSword::GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) {
 	if(ParentCharacter) {	
 		UE_LOG(LogTemp, Warning, TEXT("GetAttacking component parent cast not faild. I am in shocked!"));
+		
+		
 		//return USwordAndShieldAttackingComponent::StaticClass();
 	}
 	
