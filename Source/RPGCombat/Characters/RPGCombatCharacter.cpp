@@ -181,11 +181,7 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 }
 
 void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
-	//Destroy Weapon Attacking component from previous weapon.
-	if (CharacterAttackingComponent) {
-		CharacterAttackingComponent->OnDetachedFromCharacter();
-		CharacterAttackingComponent->DestroyComponent(false);
-	}
+
 
 	//Unequip any weapon when NewWeapon null.
 	if (!NewWeapon){
@@ -197,12 +193,30 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-	SwitchAttackingComponentClass(NewWeapon->GetAttackingComponent(this).Get());
+	SwitchAttackingComponentClass(NewWeapon);
 	if (CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
 
-	//if(NewWeapon->Prefe)
+	//if(NewWeapon->bIsPreferredRightHand && NewWeapon->bIsPreferredLeftHand) {
+	//	if(CurrentWeapon_R == nullptr) {
+	//		CurrentWeapon_R = NewWeapon;
+	//	}else {
+	//		CurrentWeapon_L = NewWeapon;
+	//	}
+	//}else if(NewWeapon->bIsPreferredRightHand) {
+	//	CurrentWeapon_R = NewWeapon;
+	//}else if(NewWeapon->bIsPreferredLeftHand) {
+	//	CurrentWeapon_L = NewWeapon;
+	//}
+
+	//TODO Needs to fix next.
+	if(NewWeapon->bIsPreferredRightHand) {
+		CurrentWeapon_R = NewWeapon;
+	}else {
+		CurrentWeapon_L = NewWeapon;
+	}
+
 
 	//Calling animation Interface.
 	if(bIsImplementsCharacterAnimInterface) {
@@ -211,9 +225,15 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 }
 
-void ARPGCombatCharacter::SwitchAttackingComponentClass(UClass* AttackingComponentStaticClass) {
+void ARPGCombatCharacter::SwitchAttackingComponentClass(AWeapon* NewWeapon) {
 	//Constructing attacking component.
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, AttackingComponentStaticClass, TEXT("Attacking Component"));
+		
+	if (CharacterAttackingComponent) {
+		//CharacterAttackingComponent->OnDetachedFromCharacter();
+		CharacterAttackingComponent->DestroyComponent(true);
+	}
+
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->GetAttackingComponent(this).Get(),NewWeapon->GetAttackingComponentName());
 
 }
 

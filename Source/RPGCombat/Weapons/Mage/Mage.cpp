@@ -4,4 +4,5 @@
 
 AMage::AMage(){
 	WeaponType = EWeaponType::MAGE;
+
 }

@@ -5,7 +5,6 @@
 
 ABow::ABow() {
 	PrimaryActorTick.bCanEverTick = true;
-	
 }
 
 void ABow::BeginPlay() {

@@ -98,7 +98,7 @@ public:
 	AWeapon* CurrentWeapon_L = nullptr;
 	AWeapon* CurrentWeapon_R = nullptr;
 
-	void SwitchAttackingComponentClass(UClass* AttackingComponentStaticClass);
+	void SwitchAttackingComponentClass(AWeapon* NewWeapon);
 	
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;

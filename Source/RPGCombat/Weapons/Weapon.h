@@ -10,7 +10,9 @@ UENUM(BlueprintType)
 enum class EWeaponType : uint8 {
 	SWORDANDSHIELD		UMETA(DisplayName = "Sword and Shield"),
 	BOW					UMETA(DisplayName = "Bow"),
-	MAGE				UMETA(DisplayName = "Mage")
+	MAGE				UMETA(DisplayName = "Mage"),
+	SHIELD				UMETA(DisplayName = "Shield"),
+	SWORD				UMETA(DisplayName = "Sword")
 };
 
 
@@ -39,7 +41,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
 	FName WeaponAttachingSocketName;	
-
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
+	FName AttackingComponentName;
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -56,12 +61,14 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon Components")
 	bool bIsPreferredLeftHand = false;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Components")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool bIsPreferredRightHand = false;
 	
 
 	virtual void OnAttachedToCharacter();
 	virtual void OnDetachFromCharacter();
+
+	virtual FName GetAttackingComponentName() const { return AttackingComponentName; }
 	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(class ARPGCombatCharacter* ParentCharacter);
 
 };
