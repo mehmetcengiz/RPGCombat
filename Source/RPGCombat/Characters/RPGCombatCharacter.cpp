@@ -75,6 +75,11 @@ void ARPGCombatCharacter::Tick(float DeltaTime)
 	if(ActorToFocus){
 		TurnFocusedActor();
 	}
+
+	if(bAttackingComponentMarkedToSwitch && !CharacterAttackingComponent) {
+		SwitchAttackingComponentClass();
+		bAttackingComponentMarkedToSwitch = false;
+	}
 }
 
 // Called to bind functionality to input
@@ -193,7 +198,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-	SwitchAttackingComponentClass(NewWeapon);
+	MarkAttackingComponentClassToSwitch(NewWeapon);
 	if (CharacterAttackingComponent) {
 		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
 	}
@@ -225,16 +230,22 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 }
 
-void ARPGCombatCharacter::SwitchAttackingComponentClass(AWeapon* NewWeapon) {
+void ARPGCombatCharacter::SwitchAttackingComponentClass() {
 	//Constructing attacking component.
-		
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewAttackingComponentClass, FName("AttackingComponent"));
+	CharacterAttackingComponent->OnAttachedToCharacter(CurrentWeapon_R);
+
+}
+
+void ARPGCombatCharacter::MarkAttackingComponentClassToSwitch(AWeapon* NewWeapon) {
 	if (CharacterAttackingComponent) {
 		//CharacterAttackingComponent->OnDetachedFromCharacter();
 		CharacterAttackingComponent->DestroyComponent(true);
 	}
+	bAttackingComponentMarkedToSwitch = true;
 
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewWeapon->GetAttackingComponent(this).Get(),NewWeapon->GetAttackingComponentName());
-
+	NewAttackingComponentClass = NewWeapon->GetAttackingComponent(this).Get();
+	NewAttackingComponentName = NewWeapon->GetAttackingComponentName();
 }
 
 
