@@ -17,6 +17,7 @@
 #include "CharacterAnimInterface.h"
 
 #include "Engine/World.h"
+#include "CharacterComponents/AttackingComponents/DefaultAttackingComponent.h"
 
 
 // Sets default values
@@ -65,6 +66,8 @@ void ARPGCombatCharacter::BeginPlay()
 	}
 	
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ARPGCombatCharacter::BeginOverlap);
+
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, UDefaultAttackingComponent::StaticClass(), FName("AttackingComponent"));
 }
 
 // Called every frame
@@ -74,6 +77,10 @@ void ARPGCombatCharacter::Tick(float DeltaTime)
 	
 	if(ActorToFocus){
 		TurnFocusedActor();
+	}
+
+	if(!CharacterAttackingComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("Pending Kill "));
 	}
 
 	if(bAttackingComponentMarkedToSwitch && !CharacterAttackingComponent) {
@@ -199,9 +206,6 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 
 	bIsEquippedWeapon = true;
 	MarkAttackingComponentClassToSwitch(NewWeapon);
-	if (CharacterAttackingComponent) {
-		CharacterAttackingComponent->OnAttachedToCharacter(NewWeapon);
-	}
 
 	//if(NewWeapon->bIsPreferredRightHand && NewWeapon->bIsPreferredLeftHand) {
 	//	if(CurrentWeapon_R == nullptr) {
@@ -232,7 +236,7 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 
 void ARPGCombatCharacter::SwitchAttackingComponentClass() {
 	//Constructing attacking component.
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewAttackingComponentClass, FName("AttackingComponent"));
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewAttackingComponentClass, NAME_None);
 	CharacterAttackingComponent->OnAttachedToCharacter(CurrentWeapon_R);
 
 }
