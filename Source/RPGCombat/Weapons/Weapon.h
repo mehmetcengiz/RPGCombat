@@ -42,9 +42,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
 	FName WeaponAttachingSocketName;	
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
-	FName AttackingComponentName;
-	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -68,7 +65,6 @@ public:
 	virtual void OnAttachedToCharacter();
 	virtual void OnDetachFromCharacter();
 
-	virtual FName GetAttackingComponentName() const { return AttackingComponentName; }
 	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(class ARPGCombatCharacter* ParentCharacter);
 
 };

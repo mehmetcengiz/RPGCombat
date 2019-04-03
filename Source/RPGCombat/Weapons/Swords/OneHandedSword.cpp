@@ -14,12 +14,10 @@ TSubclassOf<UCharacterAttackingComponent> AOneHandedSword::GetAttackingComponent
 		UE_LOG(LogTemp, Warning, TEXT("GetAttacking component parent cast not faild. I am in shocked!"));
 		if(ParentCharacter->CurrentWeapon_L) {
 			if(ParentCharacter->CurrentWeapon_L->WeaponType == EWeaponType::SHIELD) {
-				AttackingComponentName = FName("ShieldAttackingComponent");
 				return USwordAndShieldAttackingComponent::StaticClass();
 			}
 		
 			if(	ParentCharacter->CurrentWeapon_L->WeaponType == EWeaponType::SWORD) {
-				AttackingComponentName = FName("DoubleOneHandedAttackingComp");
 				return UDoubleOneHandedAttackingComp::StaticClass();
 			}
 			
@@ -27,12 +25,10 @@ TSubclassOf<UCharacterAttackingComponent> AOneHandedSword::GetAttackingComponent
 
 		if(ParentCharacter->CurrentWeapon_R) {
 			if(ParentCharacter->CurrentWeapon_R->WeaponType == EWeaponType::SWORD) {
-				AttackingComponentName = FName("DoubleOneHandedAttackingComp");
 				return UDoubleOneHandedAttackingComp::StaticClass();
 			}
 		}
 
 	}
-	AttackingComponentName = FName("OneHandedAttackingComponent");
 	return AttackingComponent;
 }
