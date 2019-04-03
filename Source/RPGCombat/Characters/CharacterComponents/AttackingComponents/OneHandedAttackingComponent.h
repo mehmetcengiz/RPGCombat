@@ -13,6 +13,7 @@ UCLASS()
 class RPGCOMBAT_API UOneHandedAttackingComponent : public UCharacterAttackingComponent
 {
 	GENERATED_BODY()
-		
+public:
 	virtual void OnAttachedToCharacter(AWeapon* NewWeapon) override;
+	virtual void PrimaryAttack() override;
 };

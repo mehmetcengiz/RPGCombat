@@ -4,6 +4,7 @@
 
 void USwordAndShieldAttackingComponent::PrimaryAttack() {
 	Super::PrimaryAttack();
+	UE_LOG(LogTemp, Warning, TEXT("USwordAndShieldAttackingComponent::PrimaryAttack"));
 }
 void USwordAndShieldAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	Super::OnAttachedToCharacter(NewWeapon);

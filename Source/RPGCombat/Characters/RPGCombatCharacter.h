@@ -98,11 +98,9 @@ public:
 	AWeapon* CurrentWeapon_L = nullptr;
 	AWeapon* CurrentWeapon_R = nullptr;
 
-	void SwitchAttackingComponentClass();
-	void MarkAttackingComponentClassToSwitch(AWeapon* NewWeapon);
-	UClass* NewAttackingComponentClass = nullptr;
-	FName NewAttackingComponentName;
-	bool bAttackingComponentMarkedToSwitch;
+	UFUNCTION(BlueprintCallable,Category = "Attacking Component")
+	void SwitchAttackingComponentClass(UClass* NewComponentClass);
+
 	
 private:
 	ICharacterAnimInterface* CharacterAnimInterface;

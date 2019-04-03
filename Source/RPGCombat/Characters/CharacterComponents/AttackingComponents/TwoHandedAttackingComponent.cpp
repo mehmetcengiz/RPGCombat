@@ -7,3 +7,8 @@ void UTwoHandedAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	//TODO DFS
 	UE_LOG(LogTemp, Warning, TEXT("UTwoHandedAttackingComponent::OnAttachedToCharacter"));
 }
+
+void UTwoHandedAttackingComponent::PrimaryAttack(){
+	Super::PrimaryAttack();
+	UE_LOG(LogTemp, Warning, TEXT("TwoHandedAttackingComponent->PrimaryAttack"));
+}

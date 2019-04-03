@@ -64,10 +64,6 @@ void ARPGCombatCharacter::BeginPlay()
 	if(CharacterAnimInstance){
 		bIsImplementsCharacterAnimInterface = CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass());
 	}
-	
-	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &ARPGCombatCharacter::BeginOverlap);
-
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, UDefaultAttackingComponent::StaticClass(), FName("AttackingComponent"));
 }
 
 // Called every frame
@@ -79,13 +75,8 @@ void ARPGCombatCharacter::Tick(float DeltaTime)
 		TurnFocusedActor();
 	}
 
-	if(!CharacterAttackingComponent) {
-		UE_LOG(LogTemp, Warning, TEXT("Pending Kill "));
-	}
-
-	if(bAttackingComponentMarkedToSwitch && !CharacterAttackingComponent) {
-		SwitchAttackingComponentClass();
-		bAttackingComponentMarkedToSwitch = false;
+	if (CharacterAttackingComponent) {
+		CharacterAttackingComponent->PrimaryAttack();
 	}
 }
 
@@ -205,7 +196,9 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 
 	bIsEquippedWeapon = true;
-	MarkAttackingComponentClassToSwitch(NewWeapon);
+
+	UClass* NewAttackingComponentClass = NewWeapon->GetAttackingComponent(this).Get();
+	SwitchAttackingComponentClass(NewAttackingComponentClass);
 
 	//if(NewWeapon->bIsPreferredRightHand && NewWeapon->bIsPreferredLeftHand) {
 	//	if(CurrentWeapon_R == nullptr) {
@@ -234,24 +227,12 @@ void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
 	}
 }
 
-void ARPGCombatCharacter::SwitchAttackingComponentClass() {
+void ARPGCombatCharacter::SwitchAttackingComponentClass(UClass* NewComponentClass) {
 	//Constructing attacking component.
-	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewAttackingComponentClass, NAME_None);
-	CharacterAttackingComponent->OnAttachedToCharacter(CurrentWeapon_R);
+	CharacterAttackingComponent = NewObject<UCharacterAttackingComponent>(this, NewComponentClass, NAME_None);
+	//CharacterAttackingComponent->OnAttachedToCharacter(CurrentWeapon_R);
 
 }
-
-void ARPGCombatCharacter::MarkAttackingComponentClassToSwitch(AWeapon* NewWeapon) {
-	if (CharacterAttackingComponent) {
-		//CharacterAttackingComponent->OnDetachedFromCharacter();
-		CharacterAttackingComponent->DestroyComponent(true);
-	}
-	bAttackingComponentMarkedToSwitch = true;
-
-	NewAttackingComponentClass = NewWeapon->GetAttackingComponent(this).Get();
-	NewAttackingComponentName = NewWeapon->GetAttackingComponentName();
-}
-
 
 void ARPGCombatCharacter::PrimaryAttackPressed() {	
 	if (!CharacterAttackingComponent) { return; }

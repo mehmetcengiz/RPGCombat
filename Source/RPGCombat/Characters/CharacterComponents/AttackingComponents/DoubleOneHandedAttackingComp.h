@@ -14,5 +14,7 @@ class RPGCOMBAT_API UDoubleOneHandedAttackingComp : public UCharacterAttackingCo
 {
 	GENERATED_BODY()
 		
+public:
 	virtual void OnAttachedToCharacter(AWeapon* NewWeapon) override;
+	virtual void PrimaryAttack() override;
 };
