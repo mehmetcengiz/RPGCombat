@@ -11,8 +11,9 @@ enum class EWeaponType : uint8 {
 	SWORDANDSHIELD		UMETA(DisplayName = "Sword and Shield"),
 	BOW					UMETA(DisplayName = "Bow"),
 	MAGE				UMETA(DisplayName = "Mage"),
-	SHIELD				UMETA(DisplayName = "Shield"),
-	SWORD				UMETA(DisplayName = "Sword")
+	ONEHANDED			UMETA(DisplayName = "OneHanded"),
+	TWOHANDED			UMETA(DisplayName = "TwoHanded"),
+	DOUBLEONEHANDED		UMETA(DisplayName = "Double-OneHanded")
 };
 
 
