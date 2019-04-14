@@ -26,10 +26,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere, Category = "Inventory")
-	int32 SlotSize = 10;
-
-	UPROPERTY(EditAnywhere, Category = "Inventory")
-	TArray<UItem*> InventoryItems;
-
+	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UItem* ItemInfo;
 };

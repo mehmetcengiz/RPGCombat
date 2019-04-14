@@ -17,11 +17,7 @@ void UItemComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for (int32 i = 0; i < SlotSize; i++) {
-		UItem* EmptySlot = NewObject<UItem>();
-		EmptySlot->ItemName = FText::AsNumber(i);
-		InventoryItems.Add(EmptySlot);
-	}
+
 	
 }
 

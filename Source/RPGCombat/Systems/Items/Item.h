@@ -28,7 +28,7 @@ class RPGCOMBAT_API UItem : public UObject
 
 
 public:
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Item Details")
 	FText ItemName;
 
