@@ -42,10 +42,28 @@ void UInventoryComponent::AddItem(UItem* Item) {
 }
 
 void UInventoryComponent::AddItem(UItem* Item, int32 SlotIndex) {
-	if (!ensure(Item != NULL)) return;
-	if (IsInventoryFull()) { return; }
+	if (!ensure(Item != NULL))	return;
+	if (IsInventoryFull()) 		return;
+	if (!SlotIndex<SlotSize)	return;
 
 	//Add item by slot.
+	if(bAreInventorySlotsEmpty[SlotIndex]) {
+		SetItemAt(Item, SlotIndex);			
+	}
+	else {
+				
+	}
+
+}
+
+void UInventoryComponent::SetItemAt(UItem* Item, int32 SlotIndex) {
+	if (!ensure(Item != NULL))	return;
+
+	for (auto item : InventoryItems) {
+		if(item->SlotIndex == SlotIndex) {
+			return;
+		}
+	}
 
 }
 

@@ -48,6 +48,9 @@ public:
 	void AddItem(UItem* Item,int32 SlotIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetItemAt(UItem* Item, int32 SlotIndex);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void DeleteItem(int32 SlotIndex);	
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
