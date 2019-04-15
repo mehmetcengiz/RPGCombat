@@ -17,18 +17,10 @@ UInventoryComponent::UInventoryComponent()
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	for (int32 i = 0; i < SlotSize; i++) {
-		UItem* EmptySlot = NewObject<UItem>();
-		EmptySlot->ItemName = FText::AsNumber(i);
-		InventoryItems.Add(EmptySlot);
-	}
 
-	for (auto current_item : CurrentItems) {
-		
-		//Add items.
+	for (int32 i = 0 ; i < SlotSize; i++) {
+		bAreInventorySlotsEmpty.Add(false);
 	}
-
 
 }
 
@@ -43,10 +35,25 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 
 void UInventoryComponent::AddItem(UItem* Item) {
-	
+	if (!ensure(Item != NULL)) return;
+	if (IsInventoryFull()) { return; }
+
+	//Add Item
+}
+
+void UInventoryComponent::AddItem(UItem* Item, int32 SlotIndex) {
+	if (!ensure(Item != NULL)) return;
+	if (IsInventoryFull()) { return; }
+
+	//Add item by slot.
+
 }
 
 void UInventoryComponent::DeleteItem(int32 SlotIndex) {
 	
+}
+
+bool UInventoryComponent::IsInventoryFull() {
+	return ItemCount >= SlotSize;
 }
 

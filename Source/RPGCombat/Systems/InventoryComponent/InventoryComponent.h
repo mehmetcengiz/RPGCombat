@@ -30,19 +30,26 @@ public:
 	int32 SlotSize = 10;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Inventory")
-	TArray<UItem*> InventoryItems;		
-	
+	int32 ItemCount=0;
+
 	UPROPERTY(EditAnywhere, Category = "Inventory")
-	TArray<UItem*> CurrentItems;
+	TArray<UItem*> InventoryItems;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Inventory")
+	TArray<bool> bAreInventorySlotsEmpty;
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	TArray<UItem*> GetInventoryItems() const { return InventoryItems; }
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void AddItem(UItem* Item);
+	
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void AddItem(UItem* Item,int32 SlotIndex);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	void DeleteItem(int32 SlotIndex);	
-	
 
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool IsInventoryFull();
 };
