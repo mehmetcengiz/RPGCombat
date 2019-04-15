@@ -13,46 +13,70 @@ class RPGCOMBAT_API UInventoryComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UInventoryComponent();
+	// Called every frame
+	void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	TArray<UItem*> GetInventoryItems() { return InventoryItems; }
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	int32 GetInventorySize() { return InventorySize; }
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void PickUpItem(AActor* ActorToPickUP);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	bool AddItemToInventory(UItem* Item);
 
 protected:
 	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-
-	UPROPERTY(EditAnywhere, Category = "Inventory")
-	int32 SlotSize = 10;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Inventory")
-	int32 ItemCount=0;
+	void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = "Inventory")
 	TArray<UItem*> InventoryItems;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Inventory")
-	TArray<bool> bAreInventorySlotsEmpty;
+	TArray<bool> InventorySlotInfo;
+
+	UPROPERTY(EditAnywhere, Category = "Inventory")
+	int32 InventorySize = 20;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Inventory")
+	int32 MaxItemCountPerSlot = 9999;
+
+public:
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	TArray<UItem*> GetInventoryItems() const { return InventoryItems; }
+	void SwapItemSlots(UItem* DraggedItem, UItem* DroppedTo);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void AddItem(UItem* Item);
-	
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void AddItem(UItem* Item,int32 SlotIndex);
+	void SetItemSlot(UItem* Item, int32 NewSlot);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void SetItemAt(UItem* Item, int32 SlotIndex);
+	void SplitItem(UItem* ItemToSplit, int32 SplitQuantity, int32 NewSlot);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void DeleteItem(int32 SlotIndex);	
+	void CombineItems(UItem* ItemA, UItem* ItemB);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	bool IsInventoryFull();
+	void DropItemFromInventory(UItem* Item);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SplitAndDropItem(UItem* ItemToSplit, int32 SplitQuantity);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SpawnItem(UItem* Item) const;
+
+
+
+private:
+	void CreateSlotInfo();
+	void DisableSlotByInventoryItems();
+
+	UFUNCTION()
+	void DeleteFromInventoryItems(UItem* ItemToDelete);
+
 };
