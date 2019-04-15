@@ -42,6 +42,10 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 }
 
 
+void UInventoryComponent::AddItem(UItem* Item) {
+	
+}
+
 void UInventoryComponent::DeleteItem(int32 SlotIndex) {
 	
 }

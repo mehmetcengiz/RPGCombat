@@ -39,6 +39,10 @@ public:
 	TArray<UItem*> GetInventoryItems() const { return InventoryItems; }
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	void DeleteItem(int32 SlotIndex);
+	void AddItem(UItem* Item);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void DeleteItem(int32 SlotIndex);	
+	
 
 };
