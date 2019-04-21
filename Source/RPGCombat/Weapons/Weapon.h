@@ -16,6 +16,19 @@ enum class EWeaponType : uint8 {
 	DOUBLEONEHANDED		UMETA(DisplayName = "Double-OneHanded")
 };
 
+UENUM(BlueprintType)
+enum class EPreferredHand : uint8 {
+	LEFT		UMETA(DisplayName = "Left"),
+	RIGHT		UMETA(DisplayName = "Right"),
+	BOTH		UMETA(DisplayName = "Both")
+};
+
+UENUM(BlueprintType)
+enum class EWeaponUsage : uint8 {
+	ONEHANDED		UMETA(DisplayName = "OneHanded"),
+	TWOHANDED		UMETA(DisplayName = "TwoHanded"),
+};
+
 
 
 UCLASS()
@@ -34,13 +47,13 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void OnPrimaryAttack();
 
-	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Weapon Components")
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category = "Weapon")
 	class UStaticMeshComponent* WeaponMesh;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon Components")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	class USphereComponent* WeaponCollision;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Weapon Components")
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	FName WeaponAttachingSocketName;	
 	
 public:	
@@ -48,17 +61,22 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 
-	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
-	EWeaponType WeaponType;
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
+	EWeaponType WeaponType;	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
+	EWeaponUsage WeaponUsage;
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon Components")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
 	TSubclassOf<class UCharacterAttackingComponent> AttackingComponent;
 
 	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon Components")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
 	bool bIsPreferredLeftHand = false;
 	
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
+	EPreferredHand PrefferedHand;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool bIsPreferredRightHand = false;
 	

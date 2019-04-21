@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Systems/Items/Item.h"
 #include "CharEquipmentComponent.generated.h"
 
 class AWeapon;
@@ -51,9 +52,12 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Equipment")
 	AActor* Arm	= nullptr;
 
-  	void OnItemEquipped(AActor* ItemToEquip);
-	void OnItemEquipped(AWeapon* WeaponToEquip);
+  	void OnItemEquipped(FItem ItemToEquip);
 	void UpdateStatsOfOwnerCharacter();
-	void DropItem(AActor* ItemToDrop);
+	void DropItem(FItem ItemToDrop);
+
+	void OnWeaponEquipped(FItem WeaponToEquip);
+	void OnArmorEquipped(FItem ArmorToEquip);
+	
 
 };
