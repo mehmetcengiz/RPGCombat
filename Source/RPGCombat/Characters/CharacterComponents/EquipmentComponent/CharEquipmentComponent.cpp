@@ -3,6 +3,7 @@
 #include "CharEquipmentComponent.h"
 #include "Engine/World.h"
 #include "Weapons/Weapon.h"
+#include "GameFramework/Character.h"
 
 // Sets default values for this component's properties
 UCharEquipmentComponent::UCharEquipmentComponent()
@@ -73,14 +74,11 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 		}else {
 			if(RightHand == NULL) {
 				RightHand = NewWeapon;
-				RightHand->OnAttachedToCharacter();
 			}else if(LeftHand == NULL) {
 				LeftHand = NewWeapon;
-				LeftHand->OnAttachedToCharacter();
 			}else {
 				RightHand->OnDetachFromCharacter();
 				RightHand = NewWeapon;
-				RightHand->OnAttachedToCharacter();
 			}
 		}
 	}else if(NewWeapon->WeaponUsage == EWeaponUsage::TWOHANDED) {
@@ -94,15 +92,18 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
 		if(NewWeapon->PrefferedHand == EPreferredHand::LEFT) {
 			LeftHand = NewWeapon;
-			LeftHand->OnAttachedToCharacter();
 		}else{
 			RightHand = NewWeapon;
-			RightHand->OnAttachedToCharacter();
 		}
 
 
 	}
 
+	NewWeapon->OnAttachedToCharacter();
+
+	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
+	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
+	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, NewWeapon->GetWeaponAttachingSocketName());
 
 }
 

@@ -6,11 +6,13 @@
 #include "GameFramework/Character.h"
 
 #include "CharacterAnimInterface.h"
+#include "Systems/Items/Item.h"
 
 #include "RPGCombatCharacter.generated.h"
 
 class AWeapon;
 class UCharacterAttackingComponent;
+class UCharEquipmentComponent;
 
 UCLASS()
 class RPGCOMBAT_API ARPGCombatCharacter : public ACharacter
@@ -23,6 +25,11 @@ class RPGCOMBAT_API ARPGCombatCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Equipment", meta = (AllowPrivateAccess = "true"))
+	UCharEquipmentComponent* CharacterEquipmentComponent = nullptr;
+
+
 
 public:
 	// Sets default values for this character's properties
@@ -90,8 +97,11 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Weapon")
 	bool bIsEquippedWeapon;
 
+	//UFUNCTION(BlueprintCallable,Category = "Weapon")
+	//void EquipWeapon(AWeapon* NewWeapon);
+
 	UFUNCTION(BlueprintCallable,Category = "Weapon")
-	void EquipWeapon(AWeapon* NewWeapon);
+	void EquipWeapon(FItem NewWeapon);
 	
 	AWeapon* CurrentWeapon_L = nullptr;
 	AWeapon* CurrentWeapon_R = nullptr;

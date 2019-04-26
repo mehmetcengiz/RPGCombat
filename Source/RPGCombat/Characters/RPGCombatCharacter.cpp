@@ -11,13 +11,12 @@
 #include "GameFramework/CharacterMovementComponent.h" 
 #include "GameFramework/Controller.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Engine/World.h"
 
 #include "CharacterComponents/CharacterAttackingComponent.h"
-#include "CharacterComponents/AttackingComponents/BowAttackingComponent.h"
+#include "CharacterComponents/EquipmentComponent/CharEquipmentComponent.h"
 #include "CharacterAnimInterface.h"
 
-#include "Engine/World.h"
-#include "CharacterComponents/AttackingComponents/DefaultAttackingComponent.h"
 
 
 // Sets default values
@@ -51,6 +50,9 @@ ARPGCombatCharacter::ARPGCombatCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+	CharacterEquipmentComponent = CreateDefaultSubobject<UCharEquipmentComponent>(TEXT("EquipmentComponent"));
+
 
 }
 
@@ -183,49 +185,55 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 
 }
 
-void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
+//void ARPGCombatCharacter::EquipWeapon(AWeapon* NewWeapon) {
+//
+//
+//	//Unequip any weapon when NewWeapon null.
+//	if (!NewWeapon){
+//		bIsEquippedWeapon = false;
+//		if (bIsImplementsCharacterAnimInterface) {
+//			ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, false); //Calling blueprint interface.
+//		}
+//		return;
+//	}
+//
+//	bIsEquippedWeapon = true;
+//
+//	UClass* NewAttackingComponentClass = NewWeapon->GetAttackingComponent(this).Get();
+//	SwitchAttackingComponentClass(NewAttackingComponentClass);
+//
+//	//if(NewWeapon->bIsPreferredRightHand && NewWeapon->bIsPreferredLeftHand) {
+//	//	if(CurrentWeapon_R == nullptr) {
+//	//		CurrentWeapon_R = NewWeapon;
+//	//	}else {
+//	//		CurrentWeapon_L = NewWeapon;
+//	//	}
+//	//}else if(NewWeapon->bIsPreferredRightHand) {
+//	//	CurrentWeapon_R = NewWeapon;
+//	//}else if(NewWeapon->bIsPreferredLeftHand) {
+//	//	CurrentWeapon_L = NewWeapon;
+//	//}
+//
+//	//TODO Needs to fix next.
+//	if(NewWeapon->bIsPreferredRightHand) {
+//		CurrentWeapon_R = NewWeapon;
+//	}else {
+//		CurrentWeapon_L = NewWeapon;
+//	}
+//
+//
+//	//Calling animation Interface.
+//	if(bIsImplementsCharacterAnimInterface) {
+//		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
+//		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon); //Calling blueprint interface.
+//	}
+//}
 
-
-	//Unequip any weapon when NewWeapon null.
-	if (!NewWeapon){
-		bIsEquippedWeapon = false;
-		if (bIsImplementsCharacterAnimInterface) {
-			ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, false); //Calling blueprint interface.
-		}
-		return;
-	}
-
-	bIsEquippedWeapon = true;
-
-	UClass* NewAttackingComponentClass = NewWeapon->GetAttackingComponent(this).Get();
-	SwitchAttackingComponentClass(NewAttackingComponentClass);
-
-	//if(NewWeapon->bIsPreferredRightHand && NewWeapon->bIsPreferredLeftHand) {
-	//	if(CurrentWeapon_R == nullptr) {
-	//		CurrentWeapon_R = NewWeapon;
-	//	}else {
-	//		CurrentWeapon_L = NewWeapon;
-	//	}
-	//}else if(NewWeapon->bIsPreferredRightHand) {
-	//	CurrentWeapon_R = NewWeapon;
-	//}else if(NewWeapon->bIsPreferredLeftHand) {
-	//	CurrentWeapon_L = NewWeapon;
-	//}
-
-	//TODO Needs to fix next.
-	if(NewWeapon->bIsPreferredRightHand) {
-		CurrentWeapon_R = NewWeapon;
-	}else {
-		CurrentWeapon_L = NewWeapon;
-	}
-
-
-	//Calling animation Interface.
-	if(bIsImplementsCharacterAnimInterface) {
-		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponType); //Calling blueprint interface.
-		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon); //Calling blueprint interface.
-	}
+void ARPGCombatCharacter::EquipWeapon(FItem NewWeapon) {
+	if (!ensure(CharacterEquipmentComponent != NULL)) return;
+	CharacterEquipmentComponent->OnItemEquipped(NewWeapon);
 }
+
 
 void ARPGCombatCharacter::SwitchAttackingComponentClass(UClass* NewComponentClass) {
 	//Constructing attacking component.

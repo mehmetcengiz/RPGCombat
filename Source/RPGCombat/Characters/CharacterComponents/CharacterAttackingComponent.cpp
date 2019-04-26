@@ -39,14 +39,6 @@ void UCharacterAttackingComponent::PrimaryAttack(){
 
 void UCharacterAttackingComponent::OnAttachedToCharacter(AWeapon* NewWeapon) {
 	UE_LOG(LogTemp, Warning, TEXT("UCharacterAttackingComponent::OnAttachedToCharacter()"));
-
-	Weapon = NewWeapon;
-
-	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
-	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-	Weapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, Weapon->GetWeaponAttachingSocketName());
-	Weapon->OnAttachedToCharacter();
-
 }
 
 void UCharacterAttackingComponent::OnDetachedFromCharacter() {
