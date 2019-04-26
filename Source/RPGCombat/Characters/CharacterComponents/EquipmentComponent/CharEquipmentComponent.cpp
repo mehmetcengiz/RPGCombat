@@ -78,14 +78,11 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 				LeftHand = NewWeapon;
 				LeftHand->OnAttachedToCharacter();
 			}else {
-				
+				RightHand->OnDetachFromCharacter();
+				RightHand = NewWeapon;
+				RightHand->OnAttachedToCharacter();
 			}
-
-
-
 		}
-
-
 	}else if(NewWeapon->WeaponUsage == EWeaponUsage::TWOHANDED) {
 		//When equipped weapon is Two Handed weapon.
 		if(LeftHand) {
