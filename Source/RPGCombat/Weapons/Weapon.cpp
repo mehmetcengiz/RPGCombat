@@ -57,7 +57,7 @@ void AWeapon::OnDetachFromCharacter() {
 }
 
 TSubclassOf<class UCharacterAttackingComponent> AWeapon::GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) {
-	return AttackingComponent;
+	return WeaponInformations.AttackingComponentClass;
 }
 
 void AWeapon::OnPrimaryAttack() {

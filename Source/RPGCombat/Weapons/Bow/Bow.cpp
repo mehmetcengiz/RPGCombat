@@ -9,7 +9,6 @@ ABow::ABow() {
 
 void ABow::BeginPlay() {
 	Super::BeginPlay();
-	WeaponType = EWeaponType::BOW;
 }
 
 

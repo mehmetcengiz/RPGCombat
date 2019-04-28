@@ -84,27 +84,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
-	EWeaponType WeaponType;	
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
-	EWeaponUsage WeaponUsage;
-
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
-	TSubclassOf<class UCharacterAttackingComponent> AttackingComponent;
-
 	virtual FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
 	virtual FName GetWeaponAttachingSocketName(EPreferredHand PrefferedHand);
-
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
-	bool bIsPreferredLeftHand = false;
-	
-	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
-	EPreferredHand PrefferedHand;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-	bool bIsPreferredRightHand = false;
-
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
 	FWeaponInfo WeaponInformations;

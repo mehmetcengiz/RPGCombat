@@ -3,5 +3,5 @@
 #include "Shield.h"
 
 AShield::AShield() {
-	WeaponType = EWeaponType::SWORDANDSHIELD;
+	
 }

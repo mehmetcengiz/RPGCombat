@@ -62,13 +62,13 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
 	FName SocketName = NewWeapon->GetWeaponAttachingSocketName();
 
-	if(NewWeapon->WeaponUsage == EWeaponUsage::ONEHANDED) {
-		if(NewWeapon->PrefferedHand == EPreferredHand::LEFT) {
+	if(NewWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {
+		if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
 			if(LeftHand) {
 				LeftHand->OnDetachFromCharacter();
 			}
 			LeftHand = NewWeapon;
-		}else if(NewWeapon->PrefferedHand == EPreferredHand::RIGHT) {
+		}else if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::RIGHT) {
 			if(RightHand) {
 				RightHand->OnDetachFromCharacter();
 			}
@@ -86,7 +86,7 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
 			}
 		}
-	}else if(NewWeapon->WeaponUsage == EWeaponUsage::TWOHANDED) {
+	}else if(NewWeapon->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
 		//When equipped weapon is Two Handed weapon.
 		if(LeftHand) {
 			LeftHand->OnDetachFromCharacter();
@@ -95,7 +95,7 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 			RightHand->OnDetachFromCharacter();
 		}
 
-		if(NewWeapon->PrefferedHand == EPreferredHand::LEFT) {
+		if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
 			LeftHand = NewWeapon;
 		}else{
 			RightHand = NewWeapon;
