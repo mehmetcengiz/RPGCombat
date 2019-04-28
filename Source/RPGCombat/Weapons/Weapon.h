@@ -29,7 +29,31 @@ enum class EWeaponUsage : uint8 {
 	TWOHANDED		UMETA(DisplayName = "TwoHanded"),
 };
 
+USTRUCT(BlueprintType)
+struct FWeaponInfo {
+	GENERATED_BODY()
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	TSubclassOf<class UCharacterAttackingComponent> AttackingComponentClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	EWeaponType Type;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	EWeaponUsage Usage;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	EPreferredHand PrefferedHand;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	FName LeftHandSocketName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	FName RightHandSocketName;
+
+};
+
+class ARPGCombatCharacter;
 
 UCLASS()
 class RPGCOMBAT_API AWeapon : public AActor
@@ -69,7 +93,8 @@ public:
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
 	TSubclassOf<class UCharacterAttackingComponent> AttackingComponent;
 
-	FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
+	virtual FName GetWeaponAttachingSocketName() const { return WeaponAttachingSocketName; }
+	virtual FName GetWeaponAttachingSocketName(EPreferredHand PrefferedHand);
 
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category = "Weapon")
 	bool bIsPreferredLeftHand = false;
@@ -79,11 +104,15 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
 	bool bIsPreferredRightHand = false;
-	
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon Informations")
+	FWeaponInfo WeaponInformations;
+
 
 	virtual void OnAttachedToCharacter();
 	virtual void OnDetachFromCharacter();
 
-	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(class ARPGCombatCharacter* ParentCharacter);
+	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(ARPGCombatCharacter* ParentCharacter);
 
 };

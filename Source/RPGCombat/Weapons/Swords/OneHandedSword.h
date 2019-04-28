@@ -18,4 +18,10 @@ public:
 	AOneHandedSword();
 
 	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) override;
+	virtual FName GetWeaponAttachingSocketName(EPreferredHand PrefferedHand) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "OneHanded Weapon")
+	FName WeaponLeftSocket;
+	UPROPERTY(EditDefaultsOnly, Category = "OneHanded Weapon")
+	FName WeaponRightSocket;
 };

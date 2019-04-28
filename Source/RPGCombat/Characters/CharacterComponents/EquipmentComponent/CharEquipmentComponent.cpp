@@ -60,6 +60,8 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 	//NUll check.
 	if (!ensure(NewWeapon != NULL)) return;
 
+	FName SocketName = NewWeapon->GetWeaponAttachingSocketName();
+
 	if(NewWeapon->WeaponUsage == EWeaponUsage::ONEHANDED) {
 		if(NewWeapon->PrefferedHand == EPreferredHand::LEFT) {
 			if(LeftHand) {
@@ -74,11 +76,14 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 		}else {
 			if(RightHand == NULL) {
 				RightHand = NewWeapon;
+				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
 			}else if(LeftHand == NULL) {
 				LeftHand = NewWeapon;
+				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::LEFT);
 			}else {
 				RightHand->OnDetachFromCharacter();
 				RightHand = NewWeapon;
+				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
 			}
 		}
 	}else if(NewWeapon->WeaponUsage == EWeaponUsage::TWOHANDED) {
@@ -95,15 +100,13 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 		}else{
 			RightHand = NewWeapon;
 		}
-
-
 	}
 
 	NewWeapon->OnAttachedToCharacter();
 
 	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, NewWeapon->GetWeaponAttachingSocketName());
+	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, SocketName);
 
 }
 

@@ -39,6 +39,10 @@ void AWeapon::Tick(float DeltaTime)
 
 }
 
+FName AWeapon::GetWeaponAttachingSocketName(EPreferredHand PrefferedHand) {
+	return WeaponAttachingSocketName;
+}
+
 void AWeapon::OnAttachedToCharacter() {
 	WeaponMesh->SetSimulatePhysics(false);
 	WeaponMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);

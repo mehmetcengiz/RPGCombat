@@ -32,3 +32,13 @@ TSubclassOf<UCharacterAttackingComponent> AOneHandedSword::GetAttackingComponent
 	}
 	return AttackingComponent;
 }
+
+FName AOneHandedSword::GetWeaponAttachingSocketName(EPreferredHand PrefferedHand) {
+	
+	if(PrefferedHand==EPreferredHand::LEFT) {
+		return WeaponLeftSocket;
+	}else if (PrefferedHand == EPreferredHand::RIGHT) {
+		return WeaponRightSocket;
+	}
+	return WeaponAttachingSocketName;
+}
