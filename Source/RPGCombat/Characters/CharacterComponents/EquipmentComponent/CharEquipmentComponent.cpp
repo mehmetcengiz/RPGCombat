@@ -31,7 +31,12 @@ void UCharEquipmentComponent::TickComponent(float DeltaTime, ELevelTick TickType
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (LeftHand) {
+		UE_LOG(LogTemp, Warning, TEXT("Left Hand"));
+	}
+	if (RightHand) {
+		UE_LOG(LogTemp, Warning, TEXT("Right Hand"));
+	}
 }
 
 void UCharEquipmentComponent::OnItemEquipped(FItem ItemToEquip) {
@@ -62,28 +67,71 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
 	FName SocketName = NewWeapon->GetWeaponAttachingSocketName();
 
-	if(NewWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {
+	if(NewWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {		
 		if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
 			if(LeftHand) {
 				LeftHand->OnDetachFromCharacter();
 			}
 			LeftHand = NewWeapon;
+
+			/*TODO Delete for prevent copying.*/
+			if (RightHand) {
+				if (RightHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+					RightHand->OnDetachFromCharacter();
+					RightHand = NULL;
+				}
+			}
+
 		}else if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::RIGHT) {
 			if(RightHand) {
 				RightHand->OnDetachFromCharacter();
 			}
 			RightHand = NewWeapon;
+
+			/*TODO Delete for prevent copying.*/
+			if (LeftHand) {
+				if (LeftHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+					LeftHand->OnDetachFromCharacter();
+					LeftHand = NULL;
+				}
+			}
+			
 		}else {
 			if(RightHand == NULL) {
 				RightHand = NewWeapon;
 				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
+
+				/*TODO Delete for prevent copying.*/
+				if (LeftHand) {
+					if (LeftHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+						LeftHand->OnDetachFromCharacter();
+						LeftHand = NULL;
+					}
+				}
+
 			}else if(LeftHand == NULL) {
 				LeftHand = NewWeapon;
 				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::LEFT);
+				
+				/*TODO Delete for prevent copying.*/
+				if (RightHand) {
+					if (RightHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+						RightHand->OnDetachFromCharacter();
+						RightHand = NULL;
+					}
+				}
 			}else {
 				RightHand->OnDetachFromCharacter();
 				RightHand = NewWeapon;
 				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
+
+				/*TODO Delete for prevent copying.*/
+				if (LeftHand) {
+					if (LeftHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+						LeftHand->OnDetachFromCharacter();
+						LeftHand = NULL;
+					}
+				}
 			}
 		}
 	}else if(NewWeapon->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
@@ -97,8 +145,10 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
 		if(NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
 			LeftHand = NewWeapon;
+			RightHand = NULL;
 		}else{
 			RightHand = NewWeapon;
+			LeftHand = NULL;
 		}
 	}
 
@@ -112,5 +162,15 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
 void UCharEquipmentComponent::OnArmorEquipped(FItem ArmorToEquip) {
 	
+}
+
+void UCharEquipmentComponent::CheckOfHand(AWeapon* Hand){
+	if (Hand) {
+		if (Hand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+			Hand->OnDetachFromCharacter();
+			Hand = NULL;
+		}
+	}
+
 }
 

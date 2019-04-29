@@ -58,6 +58,8 @@ public:
 
 	void OnWeaponEquipped(FItem WeaponToEquip);
 	void OnArmorEquipped(FItem ArmorToEquip);
+
+	void CheckOfHand(AWeapon* Hand);
 	
 
 };
