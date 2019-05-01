@@ -7,6 +7,7 @@
 #include "Systems/Items/Item.h"
 #include "CharEquipmentComponent.generated.h"
 
+enum class EPreferredHand : unsigned char;
 class AWeapon;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -59,7 +60,7 @@ public:
 	void OnWeaponEquipped(FItem WeaponToEquip);
 	void OnArmorEquipped(FItem ArmorToEquip);
 
-	void CheckOfHand(AWeapon* Hand);
+	void CheckOfHand(AWeapon* Hand, EPreferredHand preffer_hand);
 	
 
 };
