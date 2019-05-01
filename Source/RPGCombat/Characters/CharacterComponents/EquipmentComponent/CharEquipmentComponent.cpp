@@ -102,7 +102,7 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
 
 				/*TODO Delete for prevent copying.*/
-				if (LeftHand) {
+				if (LeftHand != NULL) {
 					if (LeftHand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
 						LeftHand->OnDetachFromCharacter();
 						LeftHand = NULL;
@@ -165,12 +165,11 @@ void UCharEquipmentComponent::OnArmorEquipped(FItem ArmorToEquip) {
 }
 
 void UCharEquipmentComponent::CheckOfHand(AWeapon* Hand){
-	if (Hand) {
+	if (Hand != NULL) {
 		if (Hand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
 			Hand->OnDetachFromCharacter();
 			Hand = NULL;
 		}
 	}
-
 }
 
