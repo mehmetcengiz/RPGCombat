@@ -55,14 +55,21 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Equipment")
 	AActor* Arm	= nullptr;
 
-  	void OnItemEquipped(FItem ItemToEquip);
-	void UpdateStatsOfOwnerCharacter();
-	void DropItem(FItem ItemToDrop);
+	UFUNCTION(BlueprintCallable,Category = "Equipment")
+  	void OnItemEquipped(FItem itemToEquip);
+	//void UpdateStatsOfOwnerCharacter();
+	//void DropItem(FItem item_to_drop);
 
-	void OnWeaponEquipped(FItem WeaponToEquip);
-	void OnArmorEquipped(FItem ArmorToEquip);
+	void OnWeaponEquipped(FItem weaponToEquip);
+	void OnArmorEquipped(FItem armorToEquip);
 
-	void CheckOfHand(AWeapon* Hand, EPreferredHand preffer_hand);
+	static void CheckOfHand(AWeapon** hand);
 	
 
+private:
+	AWeapon* SpawnWeaponByClass(UClass* weaponClass) const;
+	void OnNewWeaponTwoHanded(AWeapon* newWeapon);
+	void OnNewWeaponOneHanded(AWeapon* newWeapon, FName& SocketName);
+	static void AttachWeaponToCharacter(AWeapon* newWeapon, FName socketName, class ACharacter* ownerCharacter);
+	void UpdateAnimationInterface(AWeapon* newWeapon, class ACharacter* ownerCharacter);
 };

@@ -32,14 +32,14 @@ void UCharEquipmentComponent::TickComponent(float DeltaTime, ELevelTick TickType
 
 }
 
-void UCharEquipmentComponent::OnItemEquipped(FItem ItemToEquip) {
-	switch (ItemToEquip.ItemType) {
+void UCharEquipmentComponent::OnItemEquipped(FItem itemToEquip) {
+	switch (itemToEquip.ItemType) {
 	case (EItemType::WEAPON): {
-		OnWeaponEquipped(ItemToEquip);
+		OnWeaponEquipped(itemToEquip);
 		break;
 	}
 	case (EItemType::ARMOR): {
-		OnArmorEquipped(ItemToEquip);
+		OnArmorEquipped(itemToEquip);
 		break;
 	}
 	default:
@@ -47,103 +47,113 @@ void UCharEquipmentComponent::OnItemEquipped(FItem ItemToEquip) {
 	}
 }
 
-void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 
-	//Spawn weapon by class.
-	FVector Location(0.0f, 0.0f, 0.0f);
-	FRotator Rotation(0.0f, 0.0f, 0.0f);
-	FActorSpawnParameters SpawnInfo;
-	AWeapon* NewWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponToEquip.ActorClass, Location, Rotation, SpawnInfo);
+void UCharEquipmentComponent::OnWeaponEquipped(FItem weaponToEquip) {
+	AWeapon* newWeapon = SpawnWeaponByClass(weaponToEquip.ActorClass);
+	if (!ensure(newWeapon != NULL)) return;
+	FName SocketName = newWeapon->GetWeaponAttachingSocketName();
 
-	//NUll check.
-	if (!ensure(NewWeapon != NULL)) return;
-
-	FName SocketName = NewWeapon->GetWeaponAttachingSocketName();
-
-	//Weapon equipment rules.
-	if (NewWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {
-		if (NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
-			if (LeftHand) {
-				LeftHand->OnDetachFromCharacter();
-			}
-			LeftHand = NewWeapon;
-			CheckOfHand(RightHand, EPreferredHand::RIGHT);
-
-		}
-		else if (NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::RIGHT) {
-			if (RightHand) {
-				RightHand->OnDetachFromCharacter();
-			}
-			RightHand = NewWeapon;
-			CheckOfHand(LeftHand, EPreferredHand::LEFT);
-
-		}
-		else {
-			if (RightHand == nullptr) {
-				RightHand = NewWeapon;
-				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
-
-				CheckOfHand(LeftHand, EPreferredHand::LEFT);
-
-			}
-			else if (LeftHand == nullptr) {
-				LeftHand = NewWeapon;
-				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::LEFT);
-				CheckOfHand(RightHand, EPreferredHand::RIGHT);
-			}
-			else {
-				RightHand->OnDetachFromCharacter();
-				RightHand = NewWeapon;
-				SocketName = NewWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
-				CheckOfHand(LeftHand, EPreferredHand::LEFT);
-			}
-		}
+	if (newWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {
+		OnNewWeaponOneHanded(newWeapon, OUT SocketName);
 	}
-	else if (NewWeapon->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+	else if (newWeapon->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+		OnNewWeaponTwoHanded(newWeapon);
+	}
+
+	bIsEquippedWeapon = (LeftHand != nullptr) || (RightHand != nullptr);
+
+	ACharacter* ownerCharacter = Cast<ACharacter>(GetOwner());
+	if (!ensure(ownerCharacter != NULL)) return;
+	AttachWeaponToCharacter(newWeapon, SocketName, ownerCharacter);
+	UpdateAnimationInterface(newWeapon, ownerCharacter);
+}
+
+void UCharEquipmentComponent::OnNewWeaponTwoHanded(AWeapon* newWeapon) {
+	if (LeftHand) { LeftHand->OnDetachFromCharacter(); }
+	if (RightHand) { RightHand->OnDetachFromCharacter(); }
+
+	if (newWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
+		LeftHand = newWeapon;
+		RightHand = nullptr;
+	}
+	else {
+		RightHand = newWeapon;
+		LeftHand = nullptr;
+	}
+}
+
+void UCharEquipmentComponent::OnNewWeaponOneHanded(AWeapon* newWeapon, FName& SocketName) {
+	if (newWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
 		if (LeftHand) {
 			LeftHand->OnDetachFromCharacter();
 		}
+		LeftHand = newWeapon;
+		CheckOfHand(&RightHand);
+
+	}
+	else if (newWeapon->WeaponInformations.PrefferedHand == EPreferredHand::RIGHT) {
 		if (RightHand) {
 			RightHand->OnDetachFromCharacter();
 		}
+		RightHand = newWeapon;
+		CheckOfHand(&LeftHand);
 
-		if (NewWeapon->WeaponInformations.PrefferedHand == EPreferredHand::LEFT) {
-			LeftHand = NewWeapon;
-			RightHand = nullptr;
+	}
+	else {
+		if (RightHand == nullptr) {
+			RightHand = newWeapon;
+			SocketName = newWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
+
+			CheckOfHand(&LeftHand);
+
+		}
+		else if (LeftHand == nullptr) {
+			LeftHand = newWeapon;
+			SocketName = newWeapon->GetWeaponAttachingSocketName(EPreferredHand::LEFT);
+			CheckOfHand(&RightHand);
 		}
 		else {
-			RightHand = NewWeapon;
-			LeftHand = nullptr;
+			RightHand->OnDetachFromCharacter();
+			RightHand = newWeapon;
+			SocketName = newWeapon->GetWeaponAttachingSocketName(EPreferredHand::RIGHT);
+			CheckOfHand(&LeftHand);
 		}
 	}
+}
 
-	bIsEquippedWeapon = (LeftHand !=nullptr) || (RightHand != nullptr);
-
+void UCharEquipmentComponent::AttachWeaponToCharacter(AWeapon* newWeapon, FName socketName, ACharacter* ownerCharacter) {
 	//Attach to character
-	NewWeapon->OnAttachedToCharacter();
+	newWeapon->OnAttachedToCharacter();
 	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
-	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
-	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, SocketName);
+	newWeapon->AttachToComponent(ownerCharacter->GetMesh(), newAttachmentTransformRules, socketName);
+}
 
-	UAnimInstance* CharacterAnimInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
-	if (CharacterAnimInstance && CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
-		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponInformations.Type);
+void UCharEquipmentComponent::UpdateAnimationInterface(AWeapon* newWeapon, ACharacter* ownerCharacter) {
+	UAnimInstance* CharacterAnimInstance = ownerCharacter->GetMesh()->GetAnimInstance();
+	if (CharacterAnimInstance && CharacterAnimInstance->GetClass()->ImplementsInterface(
+		UCharacterAnimInterface::StaticClass())) {
+		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, newWeapon->WeaponInformations.Type);
 		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon);
 	}
 }
 
-void UCharEquipmentComponent::OnArmorEquipped(FItem ArmorToEquip) { }
+void UCharEquipmentComponent::OnArmorEquipped(FItem armorToEquip) { }
 
-void UCharEquipmentComponent::CheckOfHand(AWeapon* Hand, EPreferredHand preffer_hand) {
-	if (Hand != nullptr) {
-		if (Hand->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
-			Hand->OnDetachFromCharacter();
-			if (preffer_hand == EPreferredHand::RIGHT) {
-				RightHand = nullptr;
-			}
-			else {
-				LeftHand = nullptr;
-			}
+void UCharEquipmentComponent::CheckOfHand(AWeapon** hand) {
+	if (*(hand) != nullptr) {
+		if ((*hand)->WeaponInformations.Usage == EWeaponUsage::TWOHANDED) {
+			(*hand)->OnDetachFromCharacter();
+			(*hand) = nullptr;
 		}
 	}
+}
+
+AWeapon* UCharEquipmentComponent::SpawnWeaponByClass(UClass* weaponClass) const {
+	//Spawn weapon by class.
+	const FVector location(0.0f, 0.0f, 0.0f);
+	const FRotator rotation(0.0f, 0.0f, 0.0f);
+	const FActorSpawnParameters spawnInfo;
+	const auto newWeapon = GetWorld()->SpawnActor<AWeapon>(weaponClass, location, rotation, spawnInfo);
+
+	return newWeapon;
 }
