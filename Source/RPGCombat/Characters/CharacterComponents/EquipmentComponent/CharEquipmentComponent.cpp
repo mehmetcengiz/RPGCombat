@@ -4,6 +4,7 @@
 #include "Engine/World.h"
 #include "Weapons/Weapon.h"
 #include "GameFramework/Character.h"
+#include "Characters/CharacterAnimInterface.h"
 
 // Sets default values for this component's properties
 UCharEquipmentComponent::UCharEquipmentComponent() {
@@ -122,6 +123,12 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
 	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, SocketName);
 
+
+
+	UAnimInstance* CharacterAnimInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
+	if (CharacterAnimInstance && CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
+		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponInformations.Type);
+	}
 }
 
 void UCharEquipmentComponent::OnArmorEquipped(FItem ArmorToEquip) { }
