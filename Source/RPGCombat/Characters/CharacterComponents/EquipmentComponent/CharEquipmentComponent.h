@@ -27,6 +27,8 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Equipment")
+	bool bIsEquippedWeapon = false;
 
 	/*Weapons*/
 	UPROPERTY(EditInstanceOnly,BlueprintReadWrite, Category = "Equipment")

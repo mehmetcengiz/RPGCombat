@@ -117,17 +117,18 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem WeaponToEquip) {
 		}
 	}
 
+	bIsEquippedWeapon = (LeftHand !=nullptr) || (RightHand != nullptr);
+
 	//Attach to character
 	NewWeapon->OnAttachedToCharacter();
 	FAttachmentTransformRules newAttachmentTransformRules(EAttachmentRule::KeepRelative, true);
 	ACharacter* OwnerCharacter = Cast<ACharacter>(GetOwner());
 	NewWeapon->AttachToComponent(OwnerCharacter->GetMesh(), newAttachmentTransformRules, SocketName);
 
-
-
 	UAnimInstance* CharacterAnimInstance = OwnerCharacter->GetMesh()->GetAnimInstance();
 	if (CharacterAnimInstance && CharacterAnimInstance->GetClass()->ImplementsInterface(UCharacterAnimInterface::StaticClass())) {
 		ICharacterAnimInterface::Execute_SetWeaponType(CharacterAnimInstance, NewWeapon->WeaponInformations.Type);
+		ICharacterAnimInterface::Execute_SetIsEquippedWeapon(CharacterAnimInstance, bIsEquippedWeapon);
 	}
 }
 
