@@ -17,11 +17,7 @@ class RPGCOMBAT_API AOneHandedSword : public AWeapon
 public:
 	AOneHandedSword();
 
-	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) override;
-	virtual FName GetWeaponAttachingSocketName(EPreferredHand PrefferedHand) override;
+	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(UCharEquipmentComponent* equipmentComponent) override;
+	virtual FName GetWeaponAttachingSocketName(EPreferredHand preferredHand) override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "OneHanded Weapon")
-	FName WeaponLeftSocket;
-	UPROPERTY(EditDefaultsOnly, Category = "OneHanded Weapon")
-	FName WeaponRightSocket;
 };

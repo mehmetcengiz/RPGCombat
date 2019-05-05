@@ -54,6 +54,7 @@ struct FWeaponInfo {
 };
 
 class ARPGCombatCharacter;
+class UCharEquipmentComponent;
 
 UCLASS()
 class RPGCOMBAT_API AWeapon : public AActor
@@ -94,6 +95,6 @@ public:
 	virtual void OnAttachedToCharacter();
 	virtual void OnDetachFromCharacter();
 
-	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(ARPGCombatCharacter* ParentCharacter);
+	virtual TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponent(UCharEquipmentComponent* equipmentComponent);
 
 };

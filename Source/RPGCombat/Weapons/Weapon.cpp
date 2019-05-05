@@ -56,7 +56,7 @@ void AWeapon::OnDetachFromCharacter() {
 	WeaponMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
 }
 
-TSubclassOf<class UCharacterAttackingComponent> AWeapon::GetAttackingComponent(ARPGCombatCharacter* ParentCharacter) {
+TSubclassOf<class UCharacterAttackingComponent> AWeapon::GetAttackingComponent(UCharEquipmentComponent* equipmentComponent) {
 	return WeaponInformations.AttackingComponentClass;
 }
 
