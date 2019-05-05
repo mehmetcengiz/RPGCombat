@@ -66,6 +66,9 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem weaponToEquip) {
 	if (!ensure(ownerCharacter != NULL)) return;
 	AttachWeaponToCharacter(newWeapon, SocketName, ownerCharacter);
 	UpdateAnimationInterface(newWeapon, ownerCharacter);
+
+
+	//AttackingComponentClass = newWeapon->GetAttackingComponent();
 }
 
 void UCharEquipmentComponent::OnNewWeaponTwoHanded(AWeapon* newWeapon) {

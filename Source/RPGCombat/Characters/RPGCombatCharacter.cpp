@@ -76,10 +76,6 @@ void ARPGCombatCharacter::Tick(float DeltaTime)
 	if(ActorToFocus){
 		TurnFocusedActor();
 	}
-
-	if (CharacterAttackingComponent) {
-		CharacterAttackingComponent->PrimaryAttack();
-	}
 }
 
 // Called to bind functionality to input
@@ -232,6 +228,8 @@ void ARPGCombatCharacter::MoveRight(float Value) {
 void ARPGCombatCharacter::EquipWeapon(FItem NewWeapon) {
 	if (!ensure(CharacterEquipmentComponent != NULL)) return;
 	CharacterEquipmentComponent->OnItemEquipped(NewWeapon);
+
+	auto newAttackingComponentClass = CharacterEquipmentComponent->GetAttackingComponentClass();
 }
 
 

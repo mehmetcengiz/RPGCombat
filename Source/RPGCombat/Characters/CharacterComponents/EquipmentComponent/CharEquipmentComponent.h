@@ -57,6 +57,14 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category = "Equipment")
   	void OnItemEquipped(FItem itemToEquip);
+
+	UFUNCTION(BlueprintCallable, Category = "Equipment")
+	TSubclassOf<class UCharacterAttackingComponent> GetAttackingComponentClass() const { return AttackingComponentClass; }
+
+	TSubclassOf<class UCharacterAttackingComponent> AttackingComponentClass;
+
+
+
 	//void UpdateStatsOfOwnerCharacter();
 	//void DropItem(FItem item_to_drop);
 
