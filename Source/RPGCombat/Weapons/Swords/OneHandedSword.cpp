@@ -10,7 +10,6 @@ AOneHandedSword::AOneHandedSword(){
 
 TSubclassOf<UCharacterAttackingComponent> AOneHandedSword::GetAttackingComponent(UCharEquipmentComponent* equipmentComponent) {
 	if(equipmentComponent) {	
-		UE_LOG(LogTemp, Warning, TEXT("GetAttacking component parent cast not faild. I am in shocked!"));
 		if(equipmentComponent->LeftHand) {
 			if(equipmentComponent->LeftHand->WeaponInformations.Type == EWeaponType::SWORDANDSHIELD) {
 				return USwordAndShieldAttackingComponent::StaticClass();

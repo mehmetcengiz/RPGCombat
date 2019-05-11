@@ -53,6 +53,8 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem weaponToEquip) {
 	if (!ensure(newWeapon != NULL)) return;
 	FName SocketName = newWeapon->GetWeaponAttachingSocketName();
 
+	AttackingComponentClass = newWeapon->GetAttackingComponent(this);
+
 	if (newWeapon->WeaponInformations.Usage == EWeaponUsage::ONEHANDED) {
 		OnNewWeaponOneHanded(newWeapon, OUT SocketName);
 	}
@@ -66,9 +68,6 @@ void UCharEquipmentComponent::OnWeaponEquipped(FItem weaponToEquip) {
 	if (!ensure(ownerCharacter != NULL)) return;
 	AttachWeaponToCharacter(newWeapon, SocketName, ownerCharacter);
 	UpdateAnimationInterface(newWeapon, ownerCharacter);
-
-
-	//AttackingComponentClass = newWeapon->GetAttackingComponent();
 }
 
 void UCharEquipmentComponent::OnNewWeaponTwoHanded(AWeapon* newWeapon) {
